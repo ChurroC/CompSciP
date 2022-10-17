@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        The Pho Factory
+    </title>
+    <style>
+        body{
+            /*
+            background-image: url("Burger.jpg");
+            */
+            background:aquamarine;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        /*
+        h1, h2, h3 {
+            text-align: center;
+        }
+        */
+        p {
+            text-align: center;
+            color: gray;
+        }
+        table, td, th {
+            text-align: left;
+            width: 40%;
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        The Pho Factory
+    </h1>
+    <h2>
+        Lunch Menu
+    </h2>
+    <p>
+        Pick and appetizer, main course, and beverage:
+    </p>
+    <!--<br>-->
+        Appetizer:
+        <select id="appetizerId">
+            <option value="none">None, Price: N/A</option>
+            <option value="appOne">Spring Rolls, Price: $5.00</option>
+            <option value="appTwo">Fried Tofu, Price: $5.50</option>
+            <option value="appThree">Pot Stickers, Price: $6.00</option>
+        </select>
+        <div id="appPicId">
+            <img src="images/appOnePic.jpg" width="150" height="100">
+        </div>
+        <br>
+
+        Main Course:
+        <select id="mainId">
+            <option value="none">None, Price: N/A</option>
+            <option value="mainOne">Vegan Pho, Price: $14.00</option>
+            <option value="mainTwo">Beef Pho, Price: $15.00</option>
+            <option value="mainThree">Bun Noodle Soup (Shrimp), Price: $16.00</option>
+        </select>
+        <div id="mainPicId">
+            <img src="Burger.jpg" width="150" height="100">
+        </div>
+        <br>
+
+        Beverage:
+        <select id="beverageId">
+            <option value="none">None, Price: N/A</option>
+            <option value="bevOne">Vietnamese Iced Coffee, Price: $4.25</option>
+            <option value="bevTwo">Thai Iced Tea, Price: $5.25</option>
+            <option value="benThree">Mango Boba Smoothie, Price: $6.25</option>
+        </select>
+        <div id="bevPicId">
+            <img src="images/bevOncePic.jpg" width="150" height="100">
+        </div>
+        <br>
+
+        Name: <input type="text" id="nameId" placeholder="Full Name">
+        <br>
+        Mobile Number: <input type="text" id="phoneId" placeholder="Phone Number">
+        <br>
+        <br>
+        Check if you would like text alerts about your order: <input type="checkbox" id="checkId">
+        <br>
+        <br>
+        Tip %: <input type="number" id="tipId" placeholder="Mobile Phone">
+        <br>
+        <br>
+        <input type="button" value="Submit Order">
+</body>
+</html>

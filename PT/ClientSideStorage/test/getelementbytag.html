@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!--Maybe make this sidebar in bootstrap to make it                                                                                 -->
+    <div id="sidebar" class="sidebar">
+      <span class="closeButton" style="padding: 0px; font-size: 1.5625vw;" onclick="closeSide()">×</span>
+      <div class="content">
+          <a href="#">About</a>
+          <a href="#">Serviur5u5ces</a>
+          <a href="#"> awd'l'mkl';m</a>
+          <a href="#">Contact</a>
+          <a href="#">About</a>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+      </div>
+  </div>
+
+
+  <div class="container-fluid border">
+  <div class="row">
+      <div class="col-1 border" style="text-align: left;">
+          <span onclick="openSide()"><span class="sidebarButton">☰</span> Menu</span>
+      </div>
+      <div class="col-4 border">1</div>
+      <div class="col-2 border">Profile Img Name</div>
+      <div class="col-4 border">1</div>
+      <div class="col-1 border">
+          <div class="row">
+              <div class="col-6 border" style="display: inline;">profilke</div>
+              <div class="col-6 border"style="display: inline;">orders</div>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+      <div id="menu" class="col-1 border" style="text-align: center;">
+      <span id="all" class="menu border" onclick="menu('all'); items(all1);" style="padding: 0.521vw; display: inline-block; color: black;">All Items</span><br>
+      <span id="iceCream" class="border menu" onclick="menu('iceCream'); items(all2);" style="padding: 0.521vw; display: inline-block;">Ice Cream</span><br>
+      <span id="drink" class="border menu" onclick="menu('drink')" style="padding: 0.521vw; display: inline-block;">Drinks</span><br>
+      <span id="churro" class="border menu" onclick="menu('churro')" style="padding: 0.521vw; display: inline-block;">Churros</span><br>
+      </div>
+      <div class="col-8 border"><div id="items"></div></div>
+      <div class="col-3 border">IMG</div>
+      <!--Make it bold when iotem scri[pt occurs
+      -->
+  </div>
+
+
+  </div>
+
+
+<script>
+const y = document.getElementsByTagName("div");
+for (i=0; i<y.length; i++){
+    console.log(y[i])
+    y[i].setAttribute("contenteditable", "true")
+}
+</script>
+
+</body>
+</html>

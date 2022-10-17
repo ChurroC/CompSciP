@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<style>
+    .table{
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<script src="script.js"></script>
+</head>
+
+<body>
+    <h1>Please Sign In Admin</h1>
+    Username:<br>
+    <input type="text" placeholder="Username" id="username"><br>
+    Password:<br>
+    <input type="password" placeholder="Password" id="password"><br><br>
+
+    <input type="button" value="Sign In" id="signIn" onclick="send('adminfinal2.html')"></input>
+    <input type="button" value="Home" id="createAccount" onclick='signUp("firstName", "lastName", "username", "password", "mainMessage", "email")'>
+    <div id="mainMessage"></div>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<script src="script.js">
+    function change(){
+        document.getElementById("deleteAccount").classList="invisible"
+        document.getElementById("cancel").classList="invisible"
+    }
+</script>
+</head>
+
+<body>
+    <h1>Delete Your Account</h1>
+    <input type="text" style="text-align: center;" id="username" placeholder="Enter Username"><br>
+    <input type="password" style="text-align: center;" id="password" placeholder="Enter Password"><br>
+    <input type="button" value="Delete Account" id="deleteAccount" onclick='deleteAccount("username", "password", "mainMessage"), change()'>
+    <input type="button" value="Cancel" id="cancel" onclick='send("finalSignIn.html")'>
+    <div id="mainMessage"></div>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+    body{
+        text-align: center;
+    }
+</style>
+
+<script>
+    "use strict";
+    function test(){
+        document.getElementById("mainMessage").innerHTML=localStorage.getItem("lastname");
+    }
+</script>
+</head>
+
+<body onload="test()">
+    <input type="textbox" id="textbox">
+    <div id="mainMessage"></div>
+</body>
+
+</html>

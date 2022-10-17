@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <title>
+        How to create auto-resize textarea
+        using JavaScript/jQuery?
+    </title>
+  
+    <style>
+        body{
+            text-align: center;
+        }
+        textarea {
+            overflow: hidden;
+        }
+    </style>
+</head>
+  
+<body>
+    <h1 style="color: green">
+        GeeksforGeeks
+    </h1>
+      
+    <b>
+        Creating a textarea with
+        auto-resize in JavaScript
+    </b>
+      
+      
+<p>
+        The textarea below will resize
+        automatically accounting for
+        cut, paste and typing text.
+    </p>
+  
+      
+    <textarea id="autoresizing">
+        Try cutting, pasting
+        or typing here
+    </textarea>
+      
+    <script type="text/javascript">
+        textarea = document.querySelector("#autoresizing");
+        textarea.addEventListener('input', autoResize, false);
+      
+        function autoResize() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        }
+    </script>
+</body>
+  
+</html>

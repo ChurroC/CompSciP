@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<!--
+ *
+ * Maze Simulator (c) by Christopher Grattoni
+ * Maze Simulator is licensed under a
+ * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ * You should have received a copy of the license along with this work. 
+ * If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
+ *
+ * Last Edited: Aug 9, 2017
+ *
+ -->
+
+<html>
+<head>
+	<title>
+		Robot Maze Simulator
+	</title>
+
+	<style>
+		canvas{
+			background: #000000;
+		}
+	</style>
+	<script type="text/javascript" src="maze.js"></script>
+	<script type="text/javascript" src="speed.js"></script>
+	<script type="text/javascript" src="security.js"></script>
+	<script type="text/javascript" src="movementfunctions.js"></script>
+	<script type="text/javascript" src="engine.js"></script>
+	<!--You can load up "eastereggs.js" for Easter Eggs -->
+
+	<script>
+		function robotInstructions()
+		{
+			while (!goalReached()){
+				if (canMove('forward')){
+					moveForward();
+				}
+				else if (canMove('right')){
+					rotateRight();
+				}
+				else {
+					rotateLeft();
+				}
+			}
+		}
+		
+	</script>
+
+</head>
+
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="400" height="500"></canvas>
+
+</body>
+
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+    body{
+        text-align: center;
+    }
+    .disappear{
+        display: none;
+    }
+    .appear{
+        display: block;
+    }
+</style>
+
+<script>
+    "use strict";
+    //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Client-side_storage
+    //https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+    function saveAccount(){
+        var username=document.getElementById("username").value
+        var password=document.getElementById("password").value
+        if (localStorage.getItem(username)==null){
+            localStorage.setItem(username, password);
+            document.getElementById("mainMessage").innerHTML="You account has been saved."
+        }
+        else{
+            document.getElementById("mainMessage").innerHTML="Username is already in use, choose a different username."
+        }
+    }
+
+    function signIn(){
+        var username=document.getElementById("username").value
+        var password=document.getElementById("password").value
+        console.log(localStorage.getItem(username))
+        if (localStorage.getItem(username)==password){
+            document.getElementById("mainMessage").innerHTML="correct"
+        }
+        else{
+            document.getElementById("mainMessage").innerHTML="Your password and username are incorrect."
+        }
+
+    }
+
+    /**function deleteAccount(){
+        var username=document.getElementById("username").value
+        var password=document.getElementById("password").value
+        if (localStorage.getItem(username)!==null){
+            localStorage.removeItem(username)
+            document.getElementById("mainMessage").innerHTML="Your account has been deleted."
+        }
+        else{
+            document.getElementById("mainMessage").innerHTML="This is not an accurate username."
+        }
+    }**/
+
+    /**function deleteSignIn(){
+        document.getElementById("username").className="disappear"
+        document.getElementById("passwordText").className="disappear"
+        document.getElementById("password").className="disappear"
+        document.getElementById("deleteAccount").className="disappear"
+        document.getElementById("saveAccount").className="disappear"
+        document.getElementById("signIn").className="disappear"
+    }**/
+</script>
+</head>
+
+<body>
+    <h1>Please Sign In</h1>
+    <input type="text" class="" style="text-align: center;" id="username" placeholder="Enter Username"><br>
+    <input type="password" style="text-align: center;" id="password" placeholder="Enter Password"><br>
+    <!--<input type="button" value="Save Account" id="saveAccount" onclick="saveAccount()">-->
+    <input type="button" value="Sign In" id="signIn" onclick="signIn()">
+    <input type="button" value="Create Account" id="createAccount" onclick="createAccount()">
+    <!--<input type="button" value="Delete Account" id="deleteAccount" onclick="deleteAccount()">-->
+    <div id="mainMessage"></div>
+</body>
+
+</html>

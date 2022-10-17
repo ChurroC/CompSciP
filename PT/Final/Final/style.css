@@ -1,0 +1,66 @@
+body{
+    text-align: center;
+}
+
+.invisible{
+    display: none;
+}
+.visible{
+    display: block;
+}
+
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    width: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    box-shadow: .260416vw 0px .52083vw grey;
+}
+.content a, .content div{
+    padding: 0.417vw;
+    font-size: 0.885vw;
+    color: grey;
+    text-decoration: none;
+    display: inline-block;
+    /*border-style: solid;
+    border-width: 1px;
+    border-color: black;*/
+}
+
+.contentOfCart div, .contentOfCart button{
+    padding: 0.417vw;
+    font-size: 0.885vw;
+    color: black;
+    text-decoration: none;
+    margin: auto;
+    /*display: inline-block;*/
+    /*border-style: solid;
+    border-width: 1px;
+    border-color: black;*/
+}
+
+.sidebar a:hover, .sidebar span:hover{
+    color: black;
+}
+.closeButton{
+    color: grey;
+    text-decoration: none;
+    /*border-style: solid;
+    border-width: 1px;
+    border-color: black;*/
+    cursor: pointer;
+    position: absolute;
+    width: 1.887vw;
+    font-size: 1.5vw;
+}
+.sidebarButton{
+    font-size: 1.302vw;
+    cursor: pointer;
+}
+
+.image{
+    max-width:100%;
+    height: calc(100vw*.033);
+}

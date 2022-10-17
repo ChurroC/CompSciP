@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="../../Main/main.js"></script>
+<link rel="stylesheet" href="../../Main/sidebar.css">
+
+<style>
+body{
+    text-align: center;
+    margin: 0;
+    background-image: url("cool.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+textarea{
+    text-align: center;
+}
+h1{
+    margin: 0;
+    padding-top: 21.44px;
+    padding-bottom: 21.44px;
+}
+[name="kjlhB"]{
+    margin: 0;
+}
+</style>
+
+<script>
+"use strict";
+
+//When we call the function it creates many of the buttons on the page. This is so I can then remove them later when I switch to the Vigenère portion of the site.
+function caesarSite(){
+    document.querySelector("h1").innerHTML="Caesar Cipher Project"
+
+    document.querySelector("#keyDiv").innerHTML=""
+    const select=document.createElement("select")
+    select.id="key"
+    select.onchange=onChange
+    document.querySelector("#keyDiv").appendChild(select)
+
+    for (let i=1; i<=25; i++){
+        const option=document.createElement("OPTION");
+        option.innerHTML=i
+        option.value=i
+        document.querySelector("#key").appendChild(option);
+    }
+
+    document.querySelector("#bruteForceDiv").innerHTML=""
+    const button=document.createElement("input")
+    button.type="button"
+    button.value="Brute Force Attack"
+    button.id="bruteForceAttack"
+    button.onclick=bruteForceAttack
+    document.querySelector("#bruteForceDiv").appendChild(button)
+    
+    document.querySelector("#randomKeyDiv").innerHTML=""
+    const randomKeybutton=document.createElement("input")
+    randomKeybutton.type="button"
+    randomKeybutton.value="Random Key"
+    randomKeybutton.id="randomKey"
+    randomKeybutton.onclick=pickRandomKey
+    document.querySelector("#randomKeyDiv").appendChild(randomKeybutton)
+    
+    onChange()
+}
+
+//This deletes some of the button on the caesar site and only displayes the buttons needed for the Vigenère site.
+function vigenèreSite(){
+    document.querySelector("h1").innerHTML="Vigenère Cipher Project"
+
+    document.querySelector("#keyDiv").innerHTML=""
+    const textbox=document.createElement("input")
+    textbox.type="text"
+    textbox.id="key"
+    textbox.oninput=onChange
+    document.querySelector("#keyDiv").appendChild(textbox)
+    
+    document.querySelector("#bruteForceDiv").innerHTML=""
+    
+    document.querySelector("#randomKeyDiv").innerHTML=""
+
+    onChange()
+}
+
+//It takes in a key and a message as parameters. It automattically gets a key and message value if no paramters are inputed. It then splits the message. Then for each character in the message
+//it checks if it's between a-z then it makes it lower case then charcodes it. Then based on wether it's on encrypt or decrypt it adds or subtracts the key value. Once it does that it then
+//makes it to normal charcters again. Then I add it do the ecncrypted message which will be returned.
+function encryptOrDecrypt(key=document.querySelector("#key").value, message=document.querySelector("#messageHolder").value){
+    message=message.split("")
+
+    let encryptedMessage=""
+    for (let i=0; i<message.length; i++){
+        if ((/[a-zA-Z]/).test(message[i])){
+            message[i]=message[i].toLowerCase()
+            message[i]=message[i].charCodeAt()
+            if (document.querySelector("#option").value=="encrypt"){
+                message[i]=parseInt(message[i])+parseInt(key)
+                if (message[i]>122){
+                    message[i]=message[i]-26
+                }
+                message[i]=String.fromCharCode(message[i])
+                message[i]=message[i].toUpperCase()
+            }
+            else{
+                message[i]=parseInt(message[i])-parseInt(key)
+                if (message[i]<97){
+                    message[i]=message[i]+26
+                }
+                message[i]=String.fromCharCode(message[i])
+            }
+        }
+        encryptedMessage+=message[i]
+    }
+
+    return encryptedMessage
+}
+
+//It takes the character of each key and changes it to a number between 0-25 then uses encrypt function.
+function vigenère(key,message=document.querySelector("#messageHolder").value){
+    let encryptedMessage=""
+    
+    //checks for whitespace
+    if (/\S/.test(key)){
+        message=message.split("")
+        key=key.split("")
+
+        for (let i=0; i<message.length; i++){
+            let encryptionKey=key[i%key.length]
+            if ((/[a-zA-Z]/).test(encryptionKey)){
+                encryptionKey=encryptionKey.toLowerCase()
+                encryptionKey=encryptionKey.charCodeAt()
+                encryptionKey-=97
+            }
+            encryptedMessage+=encryptOrDecrypt(encryptionKey,message[i])
+        }
+    }
+    return encryptedMessage
+}
+
+//Everytime something changes the output gets changed
+function onChange(){
+    //If there is a select then it is caesar
+    if (document.querySelector("#keyDiv select")!==null){
+        document.querySelector("#output").value=encryptOrDecrypt()
+    }
+    else{
+        document.querySelector("#output").value=vigenère(document.querySelector("#key").value)
+    }
+}
+
+//Picks a random key in the site.
+function pickRandomKey(key){
+    const randomInteger=randomInt(1,25)
+    document.querySelector("#key").value=randomInteger
+    onChange()
+}
+
+//Shows the instructions
+function instructions(){
+    if (document.querySelector("#keyDiv select")!==null){
+        if (document.getElementById("instructionsForCaesar").style.display=="none"){
+            document.getElementById("instructionsForCaesar").style.display="block"
+        }
+        else{
+            document.getElementById("instructionsForCaesar").style.display="none"
+        }
+    }
+    else{
+        if (document.getElementById("instructionsForVigenère").style.display=="none"){
+            document.getElementById("instructionsForVigenère").style.display="block"
+        }
+        else{
+            document.getElementById("instructionsForVigenère").style.display="none"
+        }
+    }
+}
+
+//Goes thought every single key to decrypt it.
+function bruteForceAttack(){
+    let finalMessage=""
+    let decryptOrEncrypt=""
+    if (document.querySelector("#option").value=="encrypt"){
+        decryptOrEncrypt="Encrypt"
+    }
+    else{
+        decryptOrEncrypt="Decrypt"
+    }
+    
+    finalMessage+=`${decryptOrEncrypt}ing ${document.querySelector("#messageHolder").value} with Brute Force\n`
+    for (let i=1; i<26; i++){
+        finalMessage+=`Key ${i}: ${encryptOrDecrypt(i)}\n`
+    }
+    document.querySelector("#output").value=finalMessage
+}
+
+
+
+</script>
+
+</head>
+
+<!--onload='repsonsiveTextboxInPX("#output", convertVPToPX(100, true));repsonsiveTextboxInPX("#messageHolder", convertVPToPX(7, true))'-->
+<body onload="caesarSite()">
+<div id="sidebar" class="sidebar" style="left: 0; z-index: 1; height: 100vh;">
+    <a href="#" class="closeButton" style="left: .75vw;" onclick="changeWidth('#sidebar', '0%')">×</a>
+    <div class="content">
+        <a href="#" onclick="caesarSite()">Caesar Cipher</a><br>
+        <a href="#" onclick="vigenèreSite()">Vigenère Cipher</a><br>
+    </div>
+</div>
+<span onclick="changeWidth('#sidebar', '12.5%')" class="class2" style="left: 0;position: absolute;"><span class="sidebarButton">☰</span> Menu</span><br>
+
+<h1>Caesar Cipher Project</h1>
+
+<!--&#013; Use this for linebreaks? Or just do actual linebreaks in html.-->
+<textarea name="textArea" class="class1" placeholder="Type message to decrypt or encrypt." id="messageHolder" style="height: 10vh; width: 75vw;" cols="30" rows="10" oninput="onChange()"></textarea><br><br>
+
+<select name="option" id="option" onchange="onChange()" class="class1 class2">
+    <option value="encrypt">Encrypt</option>
+    <option value="decrypt">Decrypt</option>
+</select><br><br>
+
+Key: <div id="keyDiv" style="display: inline;"></div><br><br>
+
+<span id="randomKeyDiv"></span>
+<input type="button" value="Instructions" id="buttonInstructions" onclick="instructions()">
+<span id="bruteForceDiv">a</span>
+<br><br>
+
+<textarea id="output" style="height: 10vh; width: 75vw;" readonly></textarea>
+
+<div id="instructionsForCaesar" style="display: none;">Write a message then press a key. Then you get your caesar cipher output.</div>
+<div id="instructionsForVigenère" style="display: none;">Write a message then write a key. Then you get your vigenère cipher output.</div>
+
+</body>
+
+</html>

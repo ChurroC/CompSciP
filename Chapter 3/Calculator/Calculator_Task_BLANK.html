@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JavaScript Calculator</title>
+	<style>
+		body{
+			padding: 10px 0;
+			margin-top: 10px;
+			text-align: center;
+			border: 5px solid darkblue;
+			background-color: green;
+			font-family: "Arial Black", Gadget, sans-serif;
+			background-image: url("cool.jpg");
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: 100% 100%;
+		}
+	</style>
+	<script>
+		output=""
+		// declare a global variable named "output" and initialize it to an empty string
+		// NOTE: THIS VARIABLE WILL STORE THE CALCULATOR'S ON-SCREEN HISTORY
+
+		/** 
+		 * add(num1,num2) parses its arguments as numbers,
+		 * then returns the sum of these numbers
+		 *
+		 * Parameters: two strings
+		 * Return value: a number (the sum of the arguments, parsed as numbers)
+		 */	
+		
+		// TO DO: IMPLEMENT EACH OF THE FOLLOWING:
+		// multiply(num1,num2)
+		// divide(num1,num2)
+		// exponentiate(num1,num2)
+		// integerDivision(num1,num2)
+		// remainder(num1,num2)
+		
+		// NOTE: HERE ARE THE SYMBOLS FOR THE BASIC OPERATIONS IN JS:
+		// ADDITION IS +
+		// SUBTRACTION IS -
+		// MULTIPLICATION IS *
+		// DIVISION IS /
+		// EXPONENTIATE IS **
+		// INTEGER DIVISION IS Math.floor(num1/num2);
+		// REMAINDER (ALSO KNOWN AS MOD) IS %
+		function add(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return num1 + num2
+			
+		}
+		function subtract(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return num1 - num2
+		}
+		function multiply(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return num1 * num2
+		}
+		function divide(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return num1 / num2
+		}
+		function exponentiate(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return num1**num2
+		}
+		function integerDivision(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return Math.floor(num1/num2)
+		}
+		function remainder(num1,num2){
+			num1 = Number(num1);
+			num2 = Number(num2);
+			return num1 % num2
+		}
+		
+		
+		/** 
+		 * concatenateAndDisplay(item1,item2,item3,item4) concatenates  
+		 * a long output string using its arguments, then displays it
+		 * between the tags <div id=idCalcDiv> and </div>
+		 * two strings passed to it as arguments
+		 *
+		 * Parameters: two strings
+		 * Return/Output: display the value of the output string in the innerHTML of the <div> tags
+		 */		
+		function concatenateAndDisplay(item1,item2,item3,item4){
+
+			output += item1 + " "; 
+
+			output += item2 + " "; 
+
+			output += item3 + " ";
+			
+			output += "= ";
+			
+			output += item4;
+
+			output += "<br>";
+
+			document.getElementById("idCalcDiv").innerHTML=output
+			
+			// display the value of "output" in the innerHTML of the <div> tags
+		}
+		
+		/** 
+		 * calculate() stores the values of the two <input type="text"
+		 * textboxes in the webpage and the <select> dropdown menu as variables
+		 * then uses these values to call the appropriate calculator function(s) from above 
+		 * then displays an appropriate output string
+		 *
+		 * Parameters: none
+		 * Return value: none
+		 */		
+		function calculate(){
+		
+			// declare a variable named "first" and initialize it to the value of the textbox with an ID of 'idNum1'
+			var first=document.getElementById("idNum1").value
+			// declare a variable named "operation" and initialize it to the value of the select box with an ID of 'idSelectBox'
+			var operation=document.getElementById("idSelectBox").value
+			// declare a variable named "second" and initialize it to the value of the textbox with an ID of 'idNum2'
+			var second=document.getElementById("idNum2").value
+
+			var result;
+			
+			if (first==""){
+				first=0
+			}
+			if (second==""){
+				second=0
+			}
+
+			if (operation == "+"){
+				result = add(first,second);
+			}
+			else if (operation == "-"){
+				result = subtract(first, second);
+			}
+			else if (operation == "*")
+			{
+				result = multiply(first, second);
+			}
+			else if (operation == "/")
+			{
+				result = divide(first, second);
+			}
+			else if (operation == "//")
+			{
+				result = integerDivision(first, second);
+			}
+			else if (operation == "%")
+			{
+				result = remainder(first, second);
+			}
+			// TO DO: ADD THE REST OF THE NECESSARY "ELSE IF"
+			//        STATEMENTS HERE
+			
+			concatenateAndDisplay(first,operation,second,result);			
+			
+		}
+		
+		// this function should clear all on-screen calculator history
+		// setting the innerHTML between the tags <div 'idCalcDiv'> and </div>
+		// to an empty string, ""
+		//
+		// you should also replace this comment with one of your own
+		//
+		function clearHistory(){
+			// set the value of output to an empty string
+			output=""
+			document.getElementById("idCalcDiv").innerHTML=output
+			// display the value of "output" in the innerHTML of the <div> tags
+			document.getElementById("idCalcDiv").innerHTML=output
+		}
+		
+	</script>
+</head>
+<body>
+	<h1> Calculator</h1>
+	<img src="coolcalculator.jpg">
+	<br>
+	<input type="number" id="idNum1" placeholder="first number">
+		<select id="idSelectBox">
+			<option>+</option>
+			<option>-</option>
+			<option>*</option>
+			<option>/</option>
+			<option>^</option>
+			<!--Note that // is integer division, which you will implement as Math.floor(num1/num2)-->
+			<option>//</option>
+			<!--Note that % is remainder or MOD-->
+			<option>%</option>
+		</select>
+		
+	<input type="number" id="idNum2" placeholder="second number">
+	<br>
+	<!--Add an appropriate event handler to each of the following buttons:--> 
+	<input type="button" value="Calculate" onclick="calculate()">
+	<input type="button" value="Clear" onclick="clearHistory()">
+	<br>
+	<br>
+	<div id="idCalcDiv"></div>
+	<br>
+	<br>
+	
+	
+</body>
+</html>

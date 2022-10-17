@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+    @font-face {
+        font-family: computer;
+        src: url(Font/1.otf);
+    }
+    body{
+        font-family: computer;
+        text-align: center;
+    }
+    select{
+        margin: 0px;
+    }
+    textarea{
+        text-align: center;
+        margin-top: 5px;
+    }
+</style>
+
+<script>
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    //comments
+    function binToDec(binaryNumber){
+        var decimalanswer=0;
+        binaryArray=String(binaryNumber).split("");
+        binaryArray.reverse();
+        for (var i=0; i<binaryArray.length; i++){
+            var digit=parseFloat(binaryArray[i]);
+            decimalanswer+=digit*(2**i)
+        }
+        return decimalanswer
+    }
+    
+    function decToBin(decimalNumber){
+        var binaryString="";
+        while (decimalNumber>0){
+            var remainder=decimalNumber%2;
+            binaryString+=remainder
+            decimalNumber=Math.floor(decimalNumber/2);
+        }
+        binaryArray=String(binaryString).split("");
+        binaryArray.reverse()
+        binaryString=binaryArray.join("")
+        return binaryString
+    }
+
+    function convertToBinaryASCII(stringInput){
+        var binaryOutput=""
+        for (var i = 0; i < stringInput.length; i += 1) {
+            binaryOutput+=decToBin(String(stringInput.charCodeAt(i))).padStart(8, "0")+" "
+        }
+        return binaryOutput
+    }
+
+    function convertToString(binaryInput){
+        //messed up
+        var binaryArray=String(binaryInput.split())
+        var stringOutput=""
+        for (var i=0; i<binaryArray.length; i+=1){
+            stringOutput+=String.fromCharCode(binToDec(binaryArray[i]))
+        }
+        return stringOutput
+    }
+
+    function displayResult(){
+        input=document.getElementById("dropdown").value
+        if (input=="stringBinary"){
+            console.log("stringbinary")
+            output=convertToBinaryASCII(document.getElementById('textarea').value)
+            console.log(output)
+        }
+        else {
+            console.log("binarystring")
+            output=convertToString(document.getElementById('textarea').value)
+        }
+        document.getElementById("textarea2").value=output
+
+    }
+</script>
+</head>
+
+<body>
+    <h1>ASCII Convertor</h1>
+    <textarea name="textarea" id="textarea" cols="50" rows="7" oninput="displayResult()"></textarea> 
+    <br>
+    <select id="dropdown">
+        <option value="stringBinary">String to Binary</option>
+        <option value="binaryString">Binary to String</option>
+    </select>
+    <br>
+    <textarea name="textarea" id="textarea2" cols="50" rows="7"></textarea>
+    <br>
+    <div id="finalMessage"></div>
+</body>
+
+</html>

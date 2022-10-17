@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        The Restaunet
+    </title>
+    <style>
+        body{
+            /*
+            background-image: url("Burger.jpg");
+            */
+            background:aquamarine;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+        }
+        /*
+        h1, h2, h3 {
+            text-align: center;
+        }
+        */
+        p {
+            text-align: center;
+            color: gray;
+        }
+        table, td, th {
+            text-align: left;
+            width: 40%;
+            border: 3px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <script>
+            //Description;
+        var appPriceFloat;
+        var bevPriceFloat;
+        var mainPriceFloat;
+        var subtotalFloat
+        var selectedAppetizer='none'
+        var selectedMain='none'
+        var selectedBeverage='none'
+        
+        function selectItem(foodType){
+            var img='';
+            if (foodType=='appetizer'){
+               var dropdown=document.getElementById('appetizerId');
+               selectedAppetizer=dropdown.options[dropdown.selectedIndex].value;
+               console.log("appetizer")
+                    if (selectedAppetizer=='appOne'){
+                        //Image Description: Samosa
+                        //Source: https://recipes.timesofindia.com/us/recipes/samosa/rs61050397.cms
+                        img='<img src="images/samosa.jfif" width"150" height="100">'; 
+                    }
+                    else if (selectedAppetizer=='appTwo'){
+                        //Image Description: Spring Rolls
+                        //Source: https://dinnerthendessert.com/spring-rolls/
+                        img='<img src="images/Spring-Rolls.jpg" width"150" height="100">';
+                    }
+                    else if (selectedAppetizer=='appThree'){
+                        //Image Description: Ice Cream Brownies
+                        //Source: https://www.countrysidecravings.com/one-bowl-cocoa-brownies/
+                        img='<img src="images/one-bowl-cocoa-brownies-picture-1.webp" width"150" height="100">'; 
+                    }  
+                    document.getElementById('appPicId').innerHTML=img;
+            }
+            if (foodType=='main'){
+               var dropdown=document.getElementById('mainId');
+               selectedMain=dropdown.options[dropdown.selectedIndex].value;
+                    if (selectedMain=='mainOne'){
+                        //Image Description: Burger
+                        //Source: https://www.nbcnews.com/better/lifestyle/8-chefs-share-their-favorite-burger-recipes-summer-ncna1009186
+                        console.log("main")
+                        img='<img src="images/burger.jpg" width"150" height="100">'; 
+                    }
+                    else if (selectedMain=='mainTwo'){
+                        //Image Description: Biryani
+                        //Source: https://www.cubesnjuliennes.com/mutton-biryani-recipe/
+                        img='<img src="images/biryani.jpg" width"150" height="100">';
+                    }
+                    else if (selectedMain=='mainThree'){
+                        //Image Description: Deep Dish Pizza
+                        //Source: https://cookidoo.thermomix.com/recipes/recipe/en-US/r160033
+                        img='<img src="images/pizzza.jpg" width"150" height="100">'; 
+                    }  
+                    document.getElementById('mainPicId').innerHTML=img;
+            }
+            if (foodType=='beverage'){
+               var dropdown=document.getElementById('beverageId');
+               selectedBeverage=dropdown.options[dropdown.selectedIndex].value;
+                    if (selectedBeverage=='bevOne'){
+                        //Image Description: PBJ Soda
+                        //Source: https://brightside.me/creativity-cooking/16-disgusting-drinks-only-insane-people-can-dare-to-try-567960/
+                        console.log("beverage")
+                        img='<img src="images/PBJ.jpg" width"150" height="100">'; 
+                    }
+                    else if (selectedBeverage=='bevTwo'){
+                        //Image Description: Garlic Coca-Cola 
+                        //Source: https://cocacolagarlic.netlify.app/
+                        console.log("bev")
+                        img='<img src="images/cola-garlic.png" width"150" height="100">';
+                    }
+                    else if (selectedBeverage=='bevThree'){
+                        //Image Description: Butterbeer
+                        //Source: https://www.bonappetit.com/story/butterbeer-recipe-wizarding-world-of-harry-potter
+                        console.log("bev")
+                        img='<img src="images/butterbeer.jpg" width"150" height="100">'; 
+                    }  
+                    else if (selectedBeverage=='bevFour'){
+                        //Image Description: Pickle Juice
+                        //Source: https://www.amazon.com/Rocket-Fizz-Pickle-Soda-Single/dp/B07J1T444R
+                        console.log("bev")
+                        img='<img src="images/Pickel Soda.jpg" width"150" height="100">'; 
+                    }  
+                    document.getElementById('bevPicId').innerHTML=img;
+            }
+        }
+        function calculateSubtotal(){
+            if (selectedAppetizer=='none'){
+                appPriceFloat=0;
+            }
+            else if (selectedAppetizer=='appOne'){
+                appPriceFloat=14;
+            }
+            else if (selectedAppetizer=='appTwo'){
+                appPriceFloat=15;
+            }
+            else if (selectedAppetizer=='appThree'){
+                appPriceFloat=16;
+            }
+            if (selectedMain=='none'){
+                mainPriceFloat=0;
+            }
+            else if (selectedMain=='mainOne'){
+                mainPriceFloat=29.99;
+            }
+            else if (selectedMain=='mainTwo'){
+                mainPriceFloat=20;
+            }
+            else if (selectedMain=='mainThree'){
+                mainPriceFloat=52.9835;
+            }
+            if (selectedBeverage=='none'){
+                bevPriceFloat=0;
+            }
+            else if (selectedBeverage=='bevOne'){
+                bevPriceFloat=4.25;
+            }
+            else if (selectedBeverage=='bevTwo'){
+                bevPriceFloat=5.25;
+            }
+            else if (selectedBeverage=='bevThree'){
+                bevPriceFloat=6.25;
+            }
+            else if (selectedBeverage=='bevFour'){
+                bevPriceFloat=6.25;
+            }   
+            
+            subtotalFloat=appPriceFloat+mainPriceFloat+bevPriceFloat
+        }
+        function submitOrder(){
+            var name=document.getElementById('nameId').value;
+            var phone=document.getElementById('phoneId').value;
+            var tip=document.getElementById('tipId').value;
+            var isChecked=document.getElementById('checkId').checked
+            console.log(nameId)
+            var textAlertsMessage;
+
+            if (isChecked){
+                textAlertsMessage="we will text you when your order is ready."
+            }
+            else{
+                textAlertsMessage="you have opted out of text alerts. Orders are usually ready for pickup in 30 minutes."
+            }
+            textAlertsMessage+=" Please pay for your order in store."
+
+            calculateSubtotal();
+            tipPercent=parseFloat(tip);
+            var tipAmount=subtotalFloat*(tip/100)
+            var totalFloat=subtotalFloat+tipAmount
+
+            var orderSummary="";
+            orderSummary+="Customer: "+name+"<br>";
+            orderSummary+="Customer Phone :"+phone+"<br>";
+            orderSummary+="Appetizer: $"+appPriceFloat.toFixed(2)+"<br>"
+            orderSummary+="Main: $"+mainPriceFloat.toFixed(2)+"<br>"
+            orderSummary+="Beverage: $"+bevPriceFloat.toFixed(2)+"<br>"
+            orderSummary+="Subtotal: $"+subtotalFloat.toFixed(2)+"<br>"
+            orderSummary+="Tip Amount: $"+tipAmount.toFixed(2)+"<br>"
+            orderSummary+="Total: $"+totalFloat.toFixed(2)+"<br>"
+            orderSummary+="<h4> Note "+textAlertsMessage+"</h4>";
+            document.getElementById('orderSummaryId').innerHTML=orderSummary;
+        }
+
+    </script>
+</head>
+<body>
+    <h1>
+        The Pho Factory
+    </h1>
+    <h2>
+        Lunch Menu
+    </h2>
+    <p>
+        Pick and appetizer, main course, and beverage:
+    </p>
+    <!--<br>-->
+        Appetizer:
+        <select id="appetizerId" onchange="selectItem('appetizer')">
+            <option value="none">None, Price: N/A</option>
+            <option value="appOne">Samosa, Price: $14.00</option>
+            <option value="appTwo">Spring Rolls, Price: $15.00</option>
+            <option value="appThree">Chocalate Brownie Ice Cream, Price: $16.00</option>
+        </select>
+        <div id="appPicId">
+        </div>
+        <br>
+
+        Main Course:
+        <select id="mainId" onchange="selectItem('main')">
+            <option value="none">None, Price: N/A</option>
+            <option value="mainOne">Burger: $29.99</option>
+            <option value="mainTwo">Biryani, Price: $20.50</option>
+            <option value="mainThree">Deep Dish Pizza, Price: $52.9835</option>
+        </select>
+        <div id="mainPicId">
+        </div>
+        <br>
+
+        Beverage:
+        <select id="beverageId" onchange="selectItem('beverage')">
+            <option value="none">None, Price: N/A</option>
+            <option value="bevOne">Peanut Butter and Jelly Soda, Price: $4.25</option>
+            <option value="bevTwo">Garlic Coca-Cola, $5.25</option>
+            <option value="bevThree">Butterbeer, Price: $6.25</option>
+            <option value="bevFour">Pickle Soda, Price: $6.25</option>
+        </select>
+        <div id="bevPicId">
+        </div>
+        <br>
+        Name: <input type="text" id="nameId" placeholder="Full Name">
+        <br>
+        Phone Number: <input type="number" id="phoneId" placeholder="Phone Number">
+        <br>
+        <br>
+        Check if you would like text alerts about your order: <input type="checkbox" id="checkId">
+        <br>
+        <br>
+        Tip %: <input type="number" id="tipId" placeholder="Tip">
+        <br>
+        <br>
+        <input type="button" value="Submit Order" onclick="submitOrder()">
+        <br>
+        <div id='orderSummaryId'>
+        </div>
+</body>
+</html>

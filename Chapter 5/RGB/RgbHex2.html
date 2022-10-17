@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+    @font-face {
+        font-family: computer;
+        src: url(Font/1.otf);
+    }
+    body{
+        font-family: computer;
+        text-align: center;
+        background: black;
+        color: white;
+    }
+    .textbox{
+        text-align: center;
+        display: inline-block;
+    }
+    .div{
+        display: inline-block;
+    }
+</style>
+
+<script>
+    //If there are more than 3 characters in each , there is an error and it doesn not execture.
+    var time=0
+    var main=""
+    var message=""
+    var instructions="An RGB color value is specified with: rgb(red, green, blue). Each parameter (red, green, and blue) defines the intensity of<br>"
+    instructions+="the color as an integer between 0 and 255. For example, rgb(0, 0, 255) is rendered as blue, because the blue parameter is set<br>"
+    instructions+="to its highest value (255) and the others are set to 0. So you have to type in numbers using the format (0-255, 0-255, 0-255)"
+    
+    function start(){
+        document.getElementById("convertTextbox").value="00,00,00";
+    }
+
+    function showInstructions(){
+        time+=1
+        //Depending on the input in the middle and wether it's RGB or Hex it changes the instructions and the instructions button
+        // this function shows the game instructions on the webpage when called
+        if (time % 2 == 1) {
+            main=document.getElementById("main").innerHTML
+            message=document.getElementById("message").innerHTML
+            document.getElementById("message").innerHTML='<div id="gameMessage" class="div"></div>  <input type="button" value="Show Instructions" id="instructionButton" onclick="showInstructions()">'
+            document.getElementById("main").innerHTML="";
+            document.getElementById("gameMessage").innerHTML=instructions;
+            document.getElementById("instructionButton").value="Hide instructions";
+        }
+        else if (time % 2 !== 1) {
+            document.getElementById("gameMessage").innerHTML="";
+            document.getElementById("instructionButton").value="Show Instructions";
+            document.getElementById("main").innerHTML=main;
+            document.getElementById("message").innerHTML=message;
+        }
+    }
+
+    function convert(){
+        input=document.getElementById("convertTextbox").value
+        dropDownInput=document.getElementById("whatToRGB").value
+        document.getElementById("gameMessage").innerHTML=""
+        input=String(input).split(",");whatToRGB
+        work=true
+
+        if (dropDownInput=="intToRGB"){
+            if (input.length!==3){
+                document.getElementById("gameMessage").innerHTML="You must have 3 number seperated by 2 commas."
+                work=false
+            }
+
+            /*
+            if (work){
+                for (var i=0; i<input.length; i++){
+                    var curLetter=(input[i])
+                    curLetter=String(curLetter).split("");
+                    if (curLetter.length>3){
+                        document.getElementById("gameMessage").innerHTML="You can only have 3 digits within each comma."
+                        work=false
+                    }
+                }
+            }
+            */
+
+            if (work){
+                for (var i=0; i<input.length; i++){
+                    var curLetter=parseFloat(input[i])
+                    if (0>curLetter || curLetter>255){
+                        document.getElementById("gameMessage").innerHTML="You can only have a digit between 1-255 within each comma."
+                        work=false
+                    }
+                }
+            }
+
+            if (work){
+                dropdownInput=document.getElementById("whatToRGB").value
+                if (dropdownInput=="intToRGB"){
+                    hexString=changeBg(input[0], input[1], input[2])
+                    document.getElementById("gameMessage").innerHTML="The rgb-value of this color is rgb("+input[0]+", "+input[1]+", "+input[2]+") and the hex-value of this color is "+hexString+"."
+                }
+            }
+        }
+        else{
+        }
+    }
+
+    function typeNumberOrText(){
+        dropDownInput=document.getElementById("whatToRGB").value
+        if (dropDownInput=="intToRGB"){
+            document.getElementById("whatType").innerHTML="RGB:"
+            document.getElementById("convertTextbox").placeholder="0-255, 0-255, 0-255"
+        }
+        else{
+            document.getElementById("whatType").innerHTML="HEX:"
+            document.getElementById("convertTextbox").placeholder="#ffffff"
+        }
+    }
+
+    function changeBg(redHex, greenHex, blueHex){
+        wordRedHex=decToHex(-redHex+255)
+        redHex=decToHex(redHex)
+        wordGreenHex=decToHex(-greenHex+255)
+        greenHex=decToHex(greenHex)
+        wordBlueHex=decToHex(-blueHex+255)
+        blueHex=decToHex(blueHex)
+        var hexString="#"+redHex+greenHex+blueHex;
+        var wordHexString="#"+wordRedHex+wordGreenHex+wordBlueHex;
+        console.log(hexString)
+        console.log(wordHexString)
+        document.body.style.background = hexString;
+        document.body.style.color = wordHexString;
+        return hexString
+    }
+
+    function decToHex(decimalNumber){
+        var binaryString="";
+        while (decimalNumber>0){
+            var remainder=decimalNumber%16;
+            if (remainder=="10"){
+                remainder="A"
+            }
+            else if (remainder=="11"){
+                remainder="B"
+            }
+            else if (remainder=="12"){
+                remainder="C"
+            }
+            else if (remainder=="13"){
+                remainder="D"
+            }
+            else if (remainder=="14"){
+                remainder="E"
+            }
+            else if (remainder=="15"){
+                remainder="F"
+            }
+            binaryString+=remainder
+            decimalNumber=Math.floor(decimalNumber/16);
+        }
+        binaryArray=String(binaryString).split("");
+        binaryArray.reverse()
+        binaryString=binaryArray.join("")
+        binaryString=binaryString.padStart(2, "0")
+        return binaryString
+    }
+</script>
+
+</head>
+
+<body onload="start()">
+    <h1>RGB Convertor</h1>
+    <div id="main">
+    <div id="whatType" class="div">RGB:</div>
+    <input type="text" id="convertTextbox" class="textbox" placeholder="0-255, 0-255, 0-255" oninput="convert()">
+    <br><br>
+    <select id="whatToRGB" onchange="typeNumberOrText()">
+        <option value="intToRGB">Integers To RGB</option>
+        <option value="hexToRGB">Hex To RGB</option>
+        <option value="simpleToRGB">Simple Color Picker</option>
+    </select>
+    </div>
+    <br>
+    <div id="message">
+    <input type="button" value="Show Instructions" id="instructionButton" onclick="showInstructions()">
+    <br>
+    <div id="gameMessage" class="div"></div>
+    </div>
+</body>
+
+</html>

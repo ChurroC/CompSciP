@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+    @font-face {
+        font-family: christmas;
+        src: url(font2/2.otf);
+    }
+    body{
+        font-family: christmas;
+        text-align: center;
+        background-image: url("Img/img2.jpg");
+        background-size: cover;
+        font-size: 175%;
+    }
+    .button{
+        /*
+        https://www.vectorstock.com/royalty-free-vector/christmas-web-button-covered-with-snow-icon-vector-19766757
+        */
+        background-image: url("Img/cool3.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 29.25px;
+        width: 92.77500px;
+        border: none;
+        cursor: pointer;
+        transition-duration: .25s;
+        border-radius: 6px;
+        opacity: .7;
+    }
+    .button:active{
+        background-image: url("Img/cool5.png");
+    }
+    .button:hover {
+        opacity: 1;
+    }
+    .smallText{
+        font-size: 80%;
+    }
+    .coal{
+        color: red;
+    }
+    .gift{
+        color: green;
+    }
+</style>
+
+<script>
+    //"use strict";
+    var mainItems=["Playstation 5", "Roller Skates", "Gaming Chair", "Bicycle", "Baseball Bat", "Doll House", "iPad", "Puppy", "Skateboard", "Wireless Headphones", "Guitar", "Pony"]
+    var customItems=[]
+    var name=""
+
+    //This function is called when you press the submit button. Once the button is called it checks what perso is selected. Based of who is chosen it then calls the letter function
+    //and send the information of amount of items, name, and the list.
+    //I also sliced each list and made a clone because I read that in JS array and Object follows pass by reference property. So if I changes the array in the letter function it
+    //would be changed in the actual array too. So I needed to slice to create a seperate clone that is not by reference.
+       function display(){
+        var dropdownInput=document.getElementById("select").value
+        //https://www.samanthaming.com/tidbits/35-es6-way-to-clone-an-array/
+        if (dropdownInput=="suzy"){
+            clone=mainItems.slice()
+            letter(4, "Suzy", clone)
+        }
+        else if (dropdownInput=="sanjay"){
+            clone=mainItems.slice()
+            letter(2, "Sanjay", clone)
+        }
+        else if (dropdownInput=="nick"){
+            clone=mainItems.slice()
+            letter(8, "Nick", clone)
+        }
+        else if (dropdownInput=="custom"){
+            clone=customItems.slice()
+            letter(customItems.length, name, clone)
+        }
+    }
+
+    //This function takes amount of items, name, and list. Inside the function there is a variable called message that holds the ouput which will be the letter to santa. It also
+    //creates a array called gift which holds all the gift that the kids are going to recieve. It first randomly selects a present out of an array that is taken as input and adds
+    //gifts until "amountOfItems" is equal to the amount of gifts. Then it checks if the the amount of items is more than 5. If it is then it would choose a random gift and splices
+    //it out and adds A Lump Of Coal in that spot that is red. Then it add in all the gifts and ends the span which gives it a green present color except for the Lump Of Coal. Then
+    //based of whether you are naughty or not it has an ending message. Then it writes Sincerely and the name variable.
+    function letter(amountOfItems, name, array){
+        var message="<br>Dear Santa,<br> I hope you and Mrs.Claus have had a lovely year up in the North Pole! Here is the list of items that I am hoping to recieve this year:<br><span class=gift>"
+        var gifts=[]
+        for (var i=0; i<amountOfItems; i++){
+            var randomListInt=randomInt(0,array.length-1)
+            gifts.push(array[randomListInt]+"<br>")
+            array.splice(randomListInt, 1)
+        }
+
+        if (amountOfItems>5){
+            gifts.splice(randomInt(0,gifts.length-1), 1, "</span><span class=coal>A Lump Of Coal <br></span><span class=gift>")
+        }
+        for (var i=0; i<gifts.length; i++){
+            message+=gifts[i]
+        }
+        message+="</span>"
+
+        if (amountOfItems>5){
+            message+="Because I was naught this year, I have randomly replaced one of my desired items with a lump of coal.<br>"
+        }
+        else{
+            message+="Because I was nice this year, I look forward to receiving all of my desired items! Thank you!<br>"
+        }
+        message+="Sincerely,<br>"+name
+        document.getElementById("mainMessage").innerHTML=message
+    }
+
+    //This one is called when the dropdown menu is changed. It clears out the letter then check if it's on custom. If it is, then it add a menu for making your custom letter.
+    function custom(){
+        var dropdownInput=document.getElementById("select").value
+        customItems=[]
+        document.getElementById("mainMessage").innerHTML=""
+        document.getElementById("custom").innerHTML=""
+        if (dropdownInput=="custom"){
+            document.getElementById("custom").innerHTML=`
+            <input type="text" id="nameTextbox" placeholder="Your Name">
+            <input type="button" value="Save Name" id="nameButton" class="button" onclick="saveName()">
+            <div id="savedName" class="smallText"></div>
+            <input type="text" id="itemTextbox" placeholder="Your Items">
+            <input type="button" value="Save Item" id="itemButton" class="button" onclick="saveItem()">
+            <div id="savedItem" class="smallText"></div>
+            <input type="button" value="Reset" id="reset" class="button" onclick="custom()">
+            `
+        }
+    }
+
+    //This function is called when you press the save name button from the custom div/function. It changes a global variable called name. 
+    function saveName(){
+        name=document.getElementById("nameTextbox").value
+        document.getElementById("savedName").innerHTML="Custom Name: "+name
+    }
+
+    //This function is called when your press the save item button from the custom div/function. It then adds the item to the custom item array then it displayes them all.
+    function saveItem(){
+        customItems.push(document.getElementById("itemTextbox").value)
+        var message="Custom Item:"
+        for (var i=0; i<customItems.length; i++){
+            message+="<br>"+customItems[i]
+        }
+        document.getElementById("savedItem").innerHTML=message
+    }
+
+    //It finds a random number between min and max. But it also includes min and max.
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+    }
+</script>
+</head>
+
+<body>
+    <h1>(Letter To Santa)</h1>
+    The dropdown menu to select which letter to Santa you'd like to generate.<br>
+    Suzy always asks for 4 random presents, Sanjay always asks for 2 random<br>
+    presents, and Nick always asks for 8 random presents. You can also generate<br>
+    your own custom letter to Santa, but be careful! Anyone who asks for more<br>
+    than 5 present will be classifed as "naughty" and will have one of their<br>
+    presents replaced with a lump of coal!<br><br>
+    (<select id="select" onchange="custom()">
+        <option value="choose">Choose</option>
+        <option value="suzy">Suzy</option>
+        <option value="sanjay">Sanjay</option>
+        <option value="nick">Nick</option>
+        <option value="custom">Custom</option>
+    </select>)
+    <br>
+    <span id="custom"></span>
+    <input type="button" value="Submit" class="button" onclick="display()">
+    <br>
+    <div id="mainMessage"></div>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+
+<style>
+    .menu{
+        color: grey;
+        cursor: pointer;
+    }
+    .menu:hover{
+        color: black;
+    }
+</style>
+
+<script>
+//I could have nested arrays and each array is a different sidebar menu such as icecream or deserts or churros,
+//would this make it easier to use?
+var all=["Img", "Name", "Price", "Img2", "Name2", "Price2", "Img3", "Name3", "Price3"]
+//Could use nested loops shoudl think about
+//I shoudl creaye a nutton using the price
+function menu(item){
+    x=document.getElementById("menu").getElementsByClassName("menu")
+    for (i=0; i<x.length; i++){
+        x[i].style.color="grey"
+    }
+    document.getElementById(item).style.color="black"
+}
+//4 items in each row so each one can have 2 coloums
+//2 ideas. one, I can have a 2 coloumn with row fluid. two, i can have 2 coloumn agian and again until I fill up
+//he whole row and start next row
+function items(array){
+
+}
+</script>
+</head>
+
+<body>
+    <!--Row 1-->
+    <div id="sidebar" class="sidebar">
+        <span class="closeButton" style="padding: 0px; font-size: 30;" onclick="closeSide()">×</span>
+        <div class="content">
+            <a href="#">About</a>
+            <a href="#">Serviur5u5ces</a>
+            <a href="#"> awd'l'mkl';m</a>
+            <a href="#">Contact</a>
+            <a href="#">About</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+        </div>
+    </div>
+
+
+    <div class="container-fluid border">
+    <div class="row">
+        <div class="col-1 border" style="text-align: left;">
+            <span onclick="openSide()" class="sidebarButton">☰ Menu</span>
+        </div>
+        <div class="col-4 border">1</div>
+        <div class="col-2 border">Profile Img Name</div>
+        <div class="col-4 border">1</div>
+        <div class="col-1 border">
+            <div class="col-6 border" style="display: inline;">profilke</div>
+            <div class="col-6 border"style="display: inline;">orders</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="menu" class="col-1 border" style="text-align: center;">
+        <span id="all" class="menu border" onclick="menu('all')" style="padding: 10px; display: inline-block; color: black;">All Items</span><br>
+        <span id="iceCream" class="border menu" onclick="menu('iceCream')" style="padding: 10px; display: inline-block;">Ice Cream</span><br>
+        <span id="drink" class="border menu" onclick="menu('drink')" style="padding: 10px; display: inline-block;">Drinks</span><br>
+        <span id="churro" class="border menu" onclick="menu('churro')" style="padding: 10px; display: inline-block;">Churros</span><br>
+        </div>
+
+        <div class="col-8 border">
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+            <div class="row">
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+                <div class="col-3 border">tfh</div>
+            </div>
+        </div>
+
+
+        <div class="col-3 border">IMG</div>
+        <!--Make it bold when iotem script occurs
+        -->
+    </div>
+
+
+    </div>
+</body>

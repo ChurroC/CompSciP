@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Marvel Movie Trivia
+        </title>
+
+        <style>
+            body{
+                padding: 10px 0;
+                border: 5px solid white;
+                text-align: center;
+                background: rgb(2,0,36);    
+                background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(121, 9, 9, 1) 44%, rgba(0, 212, 255, 1) 100%);
+                font-family: "Trebuchet MS", Helvetica, sans-serif;
+                color: white;
+            }
+            p{
+                font-style: italic;
+            }
+        </style>
+
+        <script>
+            var imageArray=["blackpanther", "blackwidow", "captainamerica", "captainmarvel", "guardians", "shangchi", "spiderman"];
+            var movieArray=["Black Panther", "Black Widow", "Captain America", "Captain Marvel", "Guardians of the Galaxy", "Shang-Chi", "Spider-Man: Homecoming"];
+            var yearArray=[2018, 2021, 2011, 2019, 2014, 2021, 2017];
+            var time=1
+            var score=0
+            var questionNumber
+
+            // Description: It displayes the random question at the start.
+            // Citation: N/A
+            // Input/Parameter: N/A
+            // Output/Return: It puts the proper image into the DivIdPic and puts the proper question into DivIdQuestion and puts a blank in DivIdAnswere which culminate into a section where it asks teh question.
+            function displayRandomQuestion(){
+                questionNumber=randomInt(0, arrayLength-1);
+                var arrayLength=movieArray.length;
+                var picture=formatImage(imageArray, questionNumber);
+                var question=FormatQuestion(movieArray, questionNumber);
+                var pastQuestion=
+                //while (pastQuestion==)
+                //Check if it gives the same question again if not allow it if yes don't.
+                document.getElementById("divIdPic").innerHTML=picture;
+                document.getElementById("divIdQuestion").innerHTML=question;
+                document.getElementById("divIdAnswer").innerHTML="";
+            }
+
+            // Description: It Checks the answer is correct.
+            // Citation: N/A
+            // Input/Parameter: N/A
+            // Output/Return: It takes whatever the user wrote and compares it to the correct answer and displays a message based of if they got it right or wrong.
+            function checkAnswer(){
+                var submittedAnswer=document.getElementById("txtIdAnswer").value;
+                //console.log(submittedAnswer);
+                var correctAnswer=yearArray[questionNumber]
+                var currentMovie=movieArray[questionNumber]
+                var output
+
+                if (submittedAnswer==correctAnswer){
+                    output="You're correct, "+currentMovie+" was released in "+correctAnswer+".";
+                    displayRandomQuestion()
+                }
+                else if (submittedAnswer==""){
+                    output="Please type an answer before submitting."
+                }
+                else {
+                    output="You're incorrect, "+currentMovie+" was not released in "+submittedAnswer+".";
+                }
+                document.getElementById("divIdAnswer").innerHTML=output
+            }
+
+            // Description: Formats the images to properly display it.
+            // Citation: N/A
+            // Input/Parameter: inputArray and index which are used to find which movie image is the question asking for.
+            // Output/Return: It returns a line of html for images with the proper image to be put into the page later.
+            function formatImage(inputArray, index){
+                var output="<img src=images/"+inputArray[index]+".jpg width=200 height=300>";
+                //console.log(output)
+                return output
+            }
+
+            // Description: Formats the question to ask the question.
+            // Citation: N/A
+            // Input/Parameter: inputArray and index which are used to find which movie is the question asking for.
+            // Output/Return: It returns a question with whatever item is being asked for the question using the input.
+            function FormatQuestion(inputArray, index){
+                var item=inputArray[index]
+                var output="<h2>In what year was "+item+" released?</h2>"
+                return output
+            }
+
+            // Description: Return a random integer, n, such that min <=n <=m
+            // Citation: Mozilla Foundation, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+            // Input/Parameter: Two floating numbers, min and max
+            // Output/Return: Return a random image between min and max
+            /*
+            function randomInt(min, max){
+                min=Math.ceil(min);
+                max=Math.floor(max);
+
+                return Math.floor(Math.random()*(max-min+1))+min;
+            }
+            */
+           
+            // Description: Return a random integer, n, such that min <=n <=m
+            // Citation: Me/Mozilla Foundation, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+            // Input/Parameter: Two floating numbers, min and max
+            // Output/Return: Return a random image between min and max but now also works with negatives
+            function randomInt(min, max){
+            min=Math.ceil(min);
+            max=Math.floor(max);
+            if (min<0 || max<0){
+                FinalMath=Math.ceil(Math.random()*(max-min-1))+min;
+            }
+            else {
+                FinalMath=Math.floor(Math.random()*(max-min+1))+min
+            }
+            return FinalMath;
+            }
+
+            // Description: It shows the full answer key.
+            // Citation: N/A
+            // Input/Parameter: N/A
+            // Output/Return: It shows the displayOutput in DivIdFullAnswerKey. The displayOutput has all the images ready to be put on the webpage.
+            function viewAnswerKey(){
+                time+=1
+                var truefalse
+                if(time % 2 == 0) {
+                    truefalse=true
+                }
+
+                else {
+                    truefalse=false
+                }
+                console.log(truefalse)
+                var displayOutput="<br> This is the full answer key. Press the button again once you are done: <br> <br>";
+                if (truefalse){
+                    for (var i=0; i<imageArray.length; i++){
+                        displayOutput+=formatImage(imageArray, i);
+                        displayOutput+='<br>';
+                        displayOutput+=yearArray[i];
+                        displayOutput+='<br> <br>';
+                    }
+                    document.getElementById('divIdFullAnswerKey').innerHTML=displayOutput;
+                }
+                else {
+                    document.getElementById('divIdFullAnswerKey').innerHTML=""
+                }
+                /*
+                console.log("efege")
+                var output="This is the full answer key. Refresh the page when you're are done: <br>";
+                for (var i=0; i<imageArray.length; i++){
+                    output+=formatImage(imageArray, 1)+'<br>'+yearArray[i]+'<br><br>';
+                }
+                document.getElementById('divIdFullAnswerKey').innerHTML=output
+                */
+            }
+        </script>
+    </head>
+
+    <body onload="displayRandomQuestion()">
+        <div id="score"></div>
+        <h1>
+            Marvel Movie Quiz
+        </h1>
+        <p>
+            Write the Year in which the Marvel movie was released.
+        </p>
+
+        <div id="divIdPic"></div>
+        <div id="divIdQuestion"></div>
+        <input type="number" id="txtIdAnswer" placeholder="Type Your Answer Here">
+        <input type="button" value="Check Answer" onclick="checkAnswer()">
+        <input type="button" value="Next Question" onclick="displayRandomQuestion()">
+        <input type="button" value="View Answer Key" onclick="viewAnswerKey()">
+        <div id="divIdFullAnswerKey"></div>
+        <div id="divIdAnswer"><div>
+    </body>
+
+
+
+</html>

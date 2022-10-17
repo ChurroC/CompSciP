@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+
+<style>
+    .sideRow{
+        color: grey;
+        cursor: pointer;
+    }
+    .sideRow:hover{
+        color: black;
+    }
+    .border{
+        font-size: .83vw;
+    }
+
+    .cart {
+        height: 100vh;
+        position: fixed;
+        width: 0;
+        right: 0px;
+        background-color: white;
+        overflow-x: hidden;
+        transition: 0.5s;
+        box-shadow: .260416vw 0px .52083vw grey;
+        float: right;
+    }
+
+    .button{
+        border: none;
+        cursor: pointer;
+        transition-duration: .25s;
+        border-radius: 6px;
+        opacity: .7;
+    }
+    input{
+        height: 1.887vw
+    }
+    button{
+        all: revert;
+        height: 1.887vw
+    }
+</style>
+
+<script>
+var iceCream=["../img/Churro.jpg", "Name", "2", "Add To Cart","Img", "Name2", "1", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","../img/Churro.jpg", "Name", "2", "Add To Cart","Img", "Name2", "1", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","../img/Churro.jpg", "Name", "2", "Add To Cart","Img", "Name2", "1", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","../img/Churro.jpg", "Name", "2", "Add To Cart","Img", "Name2", "1", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart"]
+var churro=["../img/Churro.jpg", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart"]
+var drink=["../img/Churro.jpg", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart","Img", "Name", "1.241", "Add To Cart"]
+var allItems=[...iceCream,...churro,...drink]
+var cartItem=[]
+
+console.log("Screen Width: " + window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth)
+console.log("Screen Height: " + window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight)
+
+function colorOfSideRow(item){
+    x=document.getElementById("sideRow").getElementsByClassName("sideRow")
+    for (i=0; i<x.length; i++){
+        x[i].style.color="grey"
+    }
+    document.getElementById(item).style.color="black"
+}
+
+
+function menu(array){
+    var menuDisplay=""
+    var nextItems=0
+    for (var rowOfItem=0; rowOfItem<array.length; rowOfItem=rowOfItem+16){
+        nextItems=rowOfItem
+        for (var row=0; row<4; row++){
+            menuDisplay+="<div class='row'>"
+            for (var itemNumber=nextItems; itemNumber<rowOfItem+16; itemNumber+=4){
+                item=array[itemNumber]
+                if (item==undefined){
+                    item=""
+                }
+                else if (itemNumber%4===0){
+                    menuDisplay+="<div class='col-3 border'><img src="+item+" class='image'></div>"
+                }
+                else if (itemNumber%4===1){
+                    menuDisplay+="<div class='col-3 border'>"+item+"</div>"
+                }
+                else if (itemNumber%4===2){
+                    menuDisplay+="<div class='col-3 border'>$"+item+"</div>"
+                }
+                else if (itemNumber%4===3){
+                    var imgValue='"'+array[itemNumber-3]+'"'
+                    var nameValue='"'+array[itemNumber-2]+'"'
+                    var priceValue='"'+array[itemNumber-1]+'"'
+                    menuDisplay+="<div class='col-3 border'><input type='button' value='Add To Cart' style='width: 100%;' onclick='cart("+imgValue+","+nameValue+","+priceValue+")'></div>"
+                }
+            }
+            menuDisplay+="</div>"
+            nextItems+=1
+        }
+        menuDisplay+="<div class='row' style='height: 1.962vh;'></div>"
+    }
+    document.getElementById("items").innerHTML=menuDisplay
+}
+
+
+function cart(img, name, price){
+    var amount=1
+    if (!isNaN(price)){
+    cartItem.push(img, name, price, amount)
+    }
+    
+    for (let x=1; x<cartItem.length; x=x+4){
+        for (let y=1; y<cartItem.length; y=y+4){
+            if (cartItem[x]===cartItem[y] && x!==y){
+                var totalPrice=parseFloat(cartItem[x+1])+parseFloat(cartItem[y+1])
+                cartItem.splice(y-1,4)
+                cartItem.splice(x+1, 1, totalPrice.toFixed(2))
+                cartItem.splice(x+2, 1, parseFloat(cartItem[x+2])+1)
+            }
+        }
+    }
+
+    priceOfCart=0
+    for (let x=2; x<cartItem.length; x=x+4){
+        priceOfCart+=parseFloat(cartItem[x])
+    }
+
+    lengthOfCart=0
+    for (let x=3; x<cartItem.length; x=x+4){
+        lengthOfCart+=cartItem[x]
+    }
+
+    cartDisplay=""
+    cartDisplay+="<div class='container-fluid border'>"
+    cartDisplay+="<div class='row border' style='color:black;'><span style='text-align: center;'>Your Order: "+lengthOfCart+" Items</span></div>"
+    cartDisplay+="<div class='row border'style='width: 100%;'><button id='checkout'><span style='float: left;'>Checkout</span><span style='float: right;'>"+priceOfCart.toFixed(2)+"</span></button></div>"
+    for (let x=0; x<cartItem.length; x=x+4){
+        cartDisplay+="<div class='row border'>"
+        cartDisplay+="<div class='col-2 border'>"+cartItem[x+3]+"×</div>"
+        cartDisplay+="<div class='col-8 border'>"+cartItem[x+1]+"</div>"
+        cartDisplay+="<div class='col-2 border'>"+cartItem[x+2]+"</div>"
+        cartDisplay+="</div>"
+    }
+    cartDisplay+="</div>"
+    document.getElementById("cartItems").innerHTML=cartDisplay
+}
+
+//Add new rows
+</script>
+</head>
+
+<body onload="menu(allItems), cart('','','awc'), adminPage()">
+
+    <div class="container-fluid border">
+    <div id="sidebar" class="sidebar" style="left: 0; z-index: 1;">
+        <a href="#" class="closeButton" style="left: .75vw;" onclick="changeWidth('sidebar', '0%')">×</a>
+        <div class="content">
+            <a href="#">About</a><br>
+            <a href="#">Serviur5u5ces</a><br>
+            <a href="#"> awd'l'mkl';m</a><br>
+            <a href="#">Contact</a><br>
+            <a href="#">About</a><br>
+            <a href="#">About</a><br>
+            <a href="#">Services</a><br>
+        </div>
+    </div>
+    <div id="cart" class="sidebar" style="right: 0px; box-shadow: -.260416vw 0px .52083vw grey !important; z-index: 1;">
+        <a href="#" class="closeButton" style="right: .75vw;" onclick="changeWidth('cart', '0%')">×</a>
+        <div id="cartItems" class="contentOfCart">
+        </div>
+    </div>
+    <div id="mainPage">
+    <div class="row" style="position: sticky;top: 0; background-color: white;">
+        <div class="col-1 border" style="text-align: left;">
+            <span onclick="changeWidth('sidebar', '8.3%')"><span class="sidebarButton">☰</span> Menu</span>
+        </div>
+        <div class="col-4 border">1</div>
+        <div class="col-1 border" style="height: 100%;"><img src="../img/big.jpg" class="image"></div>
+        <div class="col-1 border">Name</div>
+        <div class="col-4 border">1</div>
+        <div class="col-1 border">
+            <div class="row border" style="height: 100%;">
+                <div class="col-6 border">awddw</div>
+                <div class="col-6 border"style="font-size: 1vw; cursor: pointer;" onclick="changeWidth('cart', '25%')">🛒</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="sideRow" class="col-1 border" style="text-align: center;">
+        <span id="all" class="border sideRow" onclick="colorOfSideRow('all'); menu(allItems);" style="padding: 0.521vw; display: inline-block; color: black;">All Items</span><br>
+        <span id="iceCream" class="border sideRow" onclick="colorOfSideRow('iceCream'); menu(iceCream);" style="padding: 0.521vw; display: inline-block;">Ice Cream</span><br>
+        <span id="drink" class="border sideRow" onclick="colorOfSideRow('drink'), menu(drink)" style="padding: 0.521vw; display: inline-block;">Drinks</span><br>
+        <span id="churro" class="border sideRow" onclick="colorOfSideRow('churro'), menu(churro)" style="padding: 0.521vw; display: inline-block;">Churros</span><br>
+        </div>
+        <div class="col-8 border" id="items"></div>
+        <div class="col-3 border"></div>
+    </div>
+    </div>
+    </div>
+</body>

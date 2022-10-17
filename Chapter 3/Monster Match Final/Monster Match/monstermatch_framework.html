@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Monster Match
+	</title>
+
+	<style>
+		@font-face {
+            font-family: creepster;
+			src: url(Creepster-Regular.ttf);
+		}
+        body{
+			font-family: creepster;
+            text-align: center;
+            padding: 15px;
+            /*
+			background-image: url("Images/cool.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+			*/
+        }
+		.button{
+			font-family: creepster;
+			/*
+			https://www.google.com/search?q=spooky+button+background&rlz=1C1GCEU_enUS966US966&sxsrf=AOaemvLWI1CjSdGH-tVBgeU6gW4Ef6GjMg:1633375727855&tbm=isch&source=iu&ictx=1&fir=MTQnWa8gYYbZyM%252CHDhwuFvQAE82HM%252C_%253B23iSQe4mRkngVM%252CWFT3uBum6DNdeM%252C_%253BBYZC7ifGw66iAM%252C9DorappyWpwevM%252C_%253BP7sBUXj6Dq5JvM%252CXyaSUKWAlDj9zM%252C_%253B64mNgCF3fXo7BM%252CXyaSUKWAlDj9zM%252C_%253BWUrlFlz_mWh4yM%252CHDhwuFvQAE82HM%252C_%253Bd2NU65u3P7SGiM%252C9p1ErpqjoZ6IDM%252C_%253BLBltmyEYzbCsKM%252CNqHZKC2g-i05BM%252C_%253BREBYs_SSvOdVhM%252Cu6hSwtgYbMBcsM%252C_%253BN6AwJSbMa4pLwM%252C23e0hRSzJkZcBM%252C_&vet=1&usg=AI4_-kRodJVeW1LYk6zss3OHiW2-M193bg&sa=X&ved=2ahUKEwjng6zgvrHzAhXBWM0KHRa3CA0Q9QF6BAgOEAE#imgrc=23iSQe4mRkngVM
+			*/
+			background-image: url("Images/cool.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+			height: 54px;
+			width: 201px;
+			border: none;
+			margin-top: 4px;
+  			cursor: pointer;
+  			transition-duration: .25s;
+		}
+		.button2:hover {
+			box-shadow: 0 12px 16px 0 rgba(0,0,0,0.3);
+		}
+		.table{
+			margin: auto;
+		}
+		.invisible{
+			bottom: 10px;
+		}
+		.bg{
+			background-image: url("Images/cool4.jpg");
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-size: 100% 100%;
+		}
+	</style>
+
+	<script>
+		//Let players choose their names
+		var player1DeckArray=[];
+		var player2DeckArray=[];
+		var currentPlayer1Index;
+		var currentPlayer2Index;
+		var currentPlayer1Card;
+		var currentPlayer2Card;
+		var cardCount=8;
+		var imageArray=["monster1.svg", "monster2.svg", "monster3.svg", "monster4.svg"];
+		var gameState="game over";
+		var pastGameState
+		var pastGameMessage
+		var player1Name="Player 1"
+		var player2Name="Player 2"
+		var time=0
+		var instructions=true
+		
+		// Description: Return a random integer, n, such that min <=n <=m
+		// Citation: Me/Mozilla Foundation, https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+		// Input/Parameter: Two floating numbers, min and max
+		// Output/Return: Return a random image between min and max but now also works with negatives
+		function randomInt(min, max){
+			min=Math.ceil(min);
+			max=Math.floor(max);
+			if (min<0 && max<0){
+				FinalMath=Math.ceil(Math.random()*(max-min-1))+min;
+			}
+			else {
+				FinalMath=Math.floor(Math.random()*(max-min+1))+min;
+			}
+			return FinalMath;
+		}
+
+		// write a formatImage function based on your Marvel project
+		function formatImage(inputArray, index){
+			var output="<img src=images/"+inputArray[index]+" width=200 height=300>";
+			return output;
+		}
+		
+		// this function starts a new game of Monster Match
+		function startNewGame(){
+			player1DeckArray=[]
+			if (gameState!=="change name"){
+				// re-initialize all relevant variables 
+				// set the game state to "play"
+				gameState="play";
+				instructions=false
+				// set all relevent .innerHTML properties as appropriate
+				document.getElementById("player1Id").innerHTML=player1Name
+				document.getElementById("player2Id").innerHTML=player2Name
+				document.getElementById("instructions").value="Pause / Show Instructions"
+				document.getElementById("gameMessage").innerHTML=""
+				time=0
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				//wierd game and time
+				// write a for-loop that puts the correct number of cards in each player's deck
+				player1DeckArray=[]
+				player2DeckArray=[]
+				for (var i=0; i<cardCount; i++){
+					tempI=i%4
+					player1DeckArray.push(imageArray[tempI])
+					player2DeckArray.push(imageArray[tempI])
+				}
+				// call the function that deals new cards
+				dealNewCards();
+			}
+		}
+		
+		function updateCounters(){
+			// update the displayed value for the number of cards left in Player 1's Deck
+			document.getElementById("p1CountId").innerHTML="Player 1 Card Count: "+player1DeckArray.length;
+			// update the displayed value for the number of cards left in Player 2's Deck
+			document.getElementById("p2CountId").innerHTML="Player 2 Card Count: "+player2DeckArray.length;
+		}
+
+		function dealNewCards(){
+			// update the currently-selected index for each deck of cards to an (appropriate) random value
+			// update the currently-selected card for each player
+			currentPlayer1Index=randomInt(0, player1DeckArray.length-1);
+			currentPlayer1Card=formatImage(player1DeckArray, currentPlayer1Index);
+			//console.log(player1DeckArray.length)
+			currentPlayer2Index=randomInt(0, player1DeckArray.length-1);
+			currentPlayer2Card=formatImage(player2DeckArray, currentPlayer2Index);
+			// update the displayed images
+			//console.log(formatImage(imageArray, currentPlayer1Index))
+			//console.log(currentPlayer1Index)
+			document.getElementById("image1Id").innerHTML=currentPlayer1Card;
+			//console.log(formatImage(imageArray, currentPlayer2Index))
+			//console.log(currentPlayer2Index)
+			document.getElementById("image2Id").innerHTML=currentPlayer2Card;
+			// call the function that updates the card count
+			updateCounters()
+		}
+		
+		function checkForWins(){
+			// if Player 1's deck has no cards in it:
+			// 1) tell the user that Player 2 has won
+			// 2) set the game state to "game over"
+			document.getElementById("gameMessage").innerHTML="There are no more cards in Player 1's deck.<br>Player 2 Wins.";
+			if (player1DeckArray.length==0){
+				document.getElementById("gameMessage").innerHTML="There are no more cards in Player 1's deck.<br>Player 2 Wins.";
+				gameState="game over"
+			}
+
+			// if Player 2's deck has no cards in it:
+			// 1) tell the user that Player 1 has won
+			// 2) set the game state to "game over"
+			if (player1DeckArray.length==0){
+				document.getElementById("gameMessage").innerHTML="There are no more cards in Player 2's deck.<br>Player 1 Wins.";
+				gameState="game over"
+			}
+		}
+
+		function checkMatch(event){
+			var curKey=event.key;
+			// use a variable to store the keypress detected by event
+			// if the game state is play:
+			if (gameState=="play"){
+				// if the keypress is "a":
+				if (curKey==a){
+					// if the cards match:
+					if (currentPlayer1Card==currentPlayer2Card){
+						// inform the user that Player 1 has claimed the match
+						document.getElementById("gameMessage").innerHTML="Player 1 has claimed the match.";
+						// .push Player 2's card into Player 1's deck
+						player1DeckArray.push(player2DeckArray[currentPlayer2Index]);
+						// .splice the card out of Player 2's deck
+						player2DeckArray.splice(player1DeckArray[currentPlayer1Index]);
+					}
+					// otherwise:
+					else{
+						// inform the user that Player 1 has misfired & forfeits their card
+						document.getElementById("gameMessage").innerHTML="Player 1 has misfired & forfeits their card.";
+						// .push Player 1's card into Player 2's deck
+						player2DeckArray.push(player1DeckArray[currentPlayer1Index]);
+						// .splice the card out of Player 1's deck
+						player1DeckArray.splice(player2DeckArray[currentPlayer2Index]);
+					// then set the game state to "pause"
+					gameState="pause";
+					// call the function that updates counters
+					updateCounters();
+					// call the function that checks for wins
+					checkForWins();
+					}
+				}
+				else if (curKey==l){
+				// otherwise, if the keypress is "l":
+					// adapt the logic above to "l" as appropriate
+					// if the cards match:
+					if (currentPlayer1Card==currentPlayer2Card){
+						// inform the user that Player 2 has claimed the match
+						document.getElementById("gameMessage").innerHTML="Player 12 has claimed the match.";
+						// .push Player 1's card into Player 2's deck
+						player2DeckArray.push(player1DeckArray[currentPlayer1Index]);
+						// .splice the card out of Player 1's deck
+						player1DeckArray.splice(player2DeckArray[currentPlayer2Index]);
+					}
+					// otherwise:
+					else{
+						// inform the user that Player 2 has misfired & forfeits their card
+						document.getElementById("gameMessage").innerHTML="Player 2 has misfired & forfeits their card.";
+						// .push Player 1's card into Player 1's deck
+						player1DeckArray.push(player2DeckArray[currentPlayer2Index]);
+						// .splice the card out of Player 2's deck
+						player2DeckArray.splice(player1DeckArray[currentPlayer1Index]);
+					// then set the game state to "pause"
+					gameState="pause";
+					// call the function that updates counters
+					updateCounters();
+					// call the function that checks for wins
+					checkForWins();
+					}
+				}
+				// otherwise, if the keypress is "n":
+				else if (curKey==n){
+					// if the cards match:
+					if (currentPlayer1Card==currentPlayer2Card){
+						// inform the user that there is a match on the board
+						document.getElementById("gameMessage").innerHTML="There is a match on the board.";
+						// set the game state to "play"
+						gameState="play"
+					}
+					// otherwise:
+					else{
+						// call the function that deals new card
+						dealNewCards();
+						// set the game message to an empty string
+						document.getElementById("gameMessage").innerHTML="";
+						// set the game state to "play"
+						gameState="play"
+					}
+				}
+			}
+			// otherwise, if the game state is "pause":
+			else if (gameState=="pause"){
+				// if the keypress is "n":
+				if (curKey==n){
+					// call the function that deals new cards
+					// set the game message to an empty string
+				}
+			}
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+			//timer when match
+		}
+		
+		function clearTable(){
+			document.getElementById("image1Id").innerHTML="";
+			document.getElementById("image2Id").innerHTML="";
+			document.getElementById("player1Id").innerHTML="";
+			document.getElementById("player2Id").innerHTML="";
+			document.getElementById("p1CountId").innerHTML="";
+			document.getElementById("p2CountId").innerHTML="";
+		}
+
+		function undoClearTable(){
+			document.getElementById("image1Id").innerHTML=currentPlayer1Card;
+			document.getElementById("image2Id").innerHTML=currentPlayer2Card;
+			document.getElementById("p1CountId").innerHTML="Player 1 Card Count: "+player1DeckArray.length;
+			document.getElementById("p2CountId").innerHTML="Player 2 Card Count: "+player2DeckArray.length;
+			document.getElementById("player1Id").innerHTML=player1Name
+			document.getElementById("player2Id").innerHTML=player2Name
+		}
+		
+		function showInstructions(){
+			// this function shows the game instructions on the webpage when called
+			if (gameState!=="change name"){
+				time+=1;
+			}
+			if (time % 2 == 1 && gameState=="game over") {
+				document.getElementById("gameMessage").innerHTML="skjoefuhjnuh";
+				document.getElementById("instructions").value="Hide instructions";
+				instructions=true
+			}
+			else if (time % 2 == 1 && gameState=="play") {
+				document.getElementById("gameMessage").innerHTML="skjoefuhjnuh";
+				clearTable();
+				document.getElementById("instructions").value="Unpause / Hide Instructions";
+				instructions=true
+			}
+			else if (time % 2 !== 1 && gameState=="play") {
+				document.getElementById("gameMessage").innerHTML="";
+				undoClearTable();
+				document.getElementById("instructions").value="Pause / Show Instructions";
+				instructions=false
+			}
+			else if (time % 2 !== 1 && gameState=="game over"){
+				document.getElementById("gameMessage").innerHTML="";
+				document.getElementById("instructions").value="Show instructions";
+				instructions=true
+			}
+		}
+
+		function deleteRenameButtons(){
+			document.getElementById("renamePlayerButton").innerHTML="";
+			document.getElementById("renameNameButton").innerHTML="";
+			gameState=pastGameState
+			document.getElementById("gameMessage").innerHTML=pastGameMessage;
+			if (!instructions){
+				undoClearTable();
+			}
+		}
+
+		function changeName(){
+			if (gameState!=="change name"){
+				clearTable();
+				pastGameState=gameState;
+				gameState="change name";
+				pastGameMessage=document.getElementById("gameMessage").innerHTML;
+				document.getElementById("gameMessage").innerHTML="";
+				document.getElementById("renamePlayerButton").innerHTML='<input type="button" value="Rename Player 1" onclick="makeRenameButtons(1)" class="button button2">';
+				document.getElementById("renamePlayerButton").innerHTML+=' <input type="button" value="Rename Player 2" onclick="makeRenameButtons(2)" class="button button2">';
+				document.getElementById("renamePlayerButton").innerHTML+=' <input type="button" value="Finsh" onclick="deleteRenameButtons()" class="button button2">';
+			}
+		}
+
+		function makeRenameButtons(whichPlayer){
+			if (whichPlayer==1){
+				document.getElementById("renameNameButton").innerHTML="";
+				document.getElementById("renameNameButton").innerHTML+='Rename Player 1: <br>';
+				document.getElementById("renameNameButton").innerHTML+='<input type="text" id="renamePlayer1TextBox" placeholder="Player 1 Name">';
+				document.getElementById("renameNameButton").innerHTML+='<input type="button" value="Rename" onclick="renamePlayer(1)">';
+			}
+			else{
+				document.getElementById("renameNameButton").innerHTML="";
+				document.getElementById("renameNameButton").innerHTML+='Rename Player 2: <br>';
+				document.getElementById("renameNameButton").innerHTML+='<input type="text" id="renamePlayer2TextBox" placeholder="Player 2 Name">';
+				document.getElementById("renameNameButton").innerHTML+='<input type="button" value="Rename" onclick="renamePlayer(2)">';
+			}
+		}
+
+		function renamePlayer(whichPlayer){
+			if (whichPlayer==1){
+				tempPlayer1Name=document.getElementById("renamePlayer1TextBox").value
+				if (tempPlayer1Name.length>22){
+					document.getElementById("renameNameButton").innerHTML+='<br>Your name must be less than 22 characters.';
+				}
+				else{
+					player1Name=document.getElementById("renamePlayer1TextBox").value;
+					document.getElementById("renameNameButton").innerHTML="";
+				}
+			}
+			else{
+				tempPlayer2Name=document.getElementById("renamePlayer2TextBox").value
+				if (tempPlayer2Name.length>22){
+					document.getElementById("renameNameButton").innerHTML+='<br>Your name must be less than 22 characters.';
+				}
+				else{
+					player2Name=document.getElementById("renamePlayer2TextBox").value;
+					document.getElementById("renameNameButton").innerHTML="";
+				}
+			}
+		}
+	</script>
+</head>
+	<!--Add an onKeyUp event handler to <body> that calls "checkMatch(event)"-->
+<body>
+	<h1>Monster Match</h1>
+	<input type="button" value="Start New Game" onclick="startNewGame()" class="button button2">
+	<input type="button" id="instructions" value="Show Instructions" onclick="showInstructions()" class="button button2">
+	<input type="button" value="Change Name" onclick="changeName()" class="button button2">
+	<div id="renamePlayerButton"></div>
+	<div id="renameNameButton"></div>
+	<!--here's a table you can have for free:-->
+	<table id="table" class="table" style="border: 2px; border-color: black;">
+		<tr id="cool">
+			<th id="stuff"><span id="player1Id"></span></th>
+			<th><span id="player2Id"></span></th>
+		</tr>
+		<tr>
+			<th><span id="image1Id"></span></th>
+			<th><span id="image2Id"></span></th>
+		</tr>
+		<tr>
+			<th><span id="p1CountId"></span></th>
+			<th><span id="p2CountId"></span></th>
+		</tr>
+	</table>
+	
+	<div id="gameMessage"></div>
+	<!-- add <div> elements with appropriate ids for a game message and game instructions-->
+</body>
+</html>

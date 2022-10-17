@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <style>
+		@font-face {
+            font-family: computer;
+			src: url(Font/1.otf);
+		}
+        body{
+			font-family: computer;
+            text-align: center;
+        }
+        .textbox{
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        function correctInput(){
+            var textboxInput=document.getElementById("numberConvertor").value
+            var dropdownInput=document.getElementById("baseConvertor").value
+            var correctInfo=true
+            var decimalAnswer=""
+            var ifNumbersAllowed=""
+            var allNumberAllowed=[[0,1], [0,1,2,3,4,5,6,7], [0,1,2,3,4,5,6,7,8,9,"A","B","C","D","E","F"], [], [], []]
+            var numberAllowed=[]
+            //Make sure the number stayes in the input when you change from text to number
+            //also if you change the dropdwon input it changes the output
+            
+            if (textboxInput==""){
+                document.getElementById("mainMessage").innerHTML="You left your base convertor textbox blank."
+                decimalAnswer="ERROR"
+            }
+            else{
+                if (dropdownInput=="base2to10"){    
+                    numberAllowed=allNumberAllowed[0]
+                }
+                else if (dropdownInput=="base8to10"){
+                    numberAllowed=allNumberAllowed[1]
+                }
+                else if (dropdownInput=="base16to10"){
+                    numberAllowed=allNumberAllowed[2]
+                }
+                
+                for (var i=0; i<numberAllowed.length; i++){
+                    ifNumbersAllowed+="curLetter!=="
+                    ifNumbersAllowed+=numberAllowed[i]
+                    ifNumbersAllowed+=" && "
+                }
+                ifNumbersAllowed=ifNumbersAllowed.slice(0, -4)
+                console.log(ifNumbersAllowed)
+
+                textboxInput=String(textboxInput).split("");
+                for (var i=0; i<textboxInput.length; i++){
+                    var curLetter=parseFloat(textboxInput[i]);
+                    console.log(curLetter)
+                    if (ifNumbersAllowed){
+                        correctInfo=false
+                        decimalAnswer="ERROR"
+                        document.getElementById("mainMessage").innerHTML="You can only have the digits "+" and "+" in the convertor."
+                        break
+                    }
+                    console.log(i)
+                }
+                textboxInput=document.getElementById("numberConvertor").value
+
+                if (correctInfo){
+                    decimalAnswer=binToDec(document.getElementById("numberConvertor").value)
+                    document.getElementById("mainMessage").innerHTML=""
+                }
+            }
+            document.getElementById("convertedNumber").value=decimalAnswer
+        }
+
+        function typeNumberOrText(){
+            var dropdownInput=document.getElementById("baseConvertor").value
+            var textboxInput=document.getElementById("numberConvertor").value
+            var pastTextboxInput=textboxInput
+            var textboxInputFinal=""
+            
+            if (dropdownInput=="base2to10"){
+                textboxInput=String(textboxInput).split("");
+                for (var i=0; i<textboxInput.length; i++){
+                    var curLetter=(textboxInput[i])
+                    if (!isNaN(curLetter)){
+                        textboxInputFinal+=curLetter
+                    }
+                }
+                decimalAnswer=binToDec(pastTextboxInput)
+                document.getElementById("convertedNumber").value=decimalAnswer
+                document.getElementById("numberConvertor").value=textboxInputFinal
+                document.getElementById("numberConvertor").type="number"
+            }
+            else if (dropdownInput=="base8to10"){
+                decimalAnswer=octToDec(textboxInput)
+                document.getElementById("convertedNumber").value=decimalAnswer
+                document.getElementById("numberConvertor").type="number"
+            }
+            else if (dropdownInput=="base16to10"){
+                decimalAnswer=hexToDec(textboxInput)
+                document.getElementById("convertedNumber").value=decimalAnswer
+                document.getElementById("numberConvertor").type="text"
+            }
+            else if (dropdownInput=="base10to2"){
+                decimalAnswer=decToBin(textboxInput)
+                document.getElementById("convertedNumber").value=decimalAnswer
+                document.getElementById("numberConvertor").type="number"
+            }
+            else if (dropdownInput=="base10to8"){
+                decimalAnswer=decToOct(textboxInput)
+                document.getElementById("convertedNumber").value=decimalAnswer
+                document.getElementById("numberConvertor").type="number"
+            }
+            else if (dropdownInput=="base10to16"){
+                decimalAnswer=decToHex(textboxInput)
+                document.getElementById("convertedNumber").value=decimalAnswer
+                document.getElementById("numberConvertor").type="number"
+            }
+        }
+
+        function binToDec(binaryNumber){
+            var decimalanswer=0;
+            binaryArray=String(binaryNumber).split("");
+            binaryArray.reverse();
+            for (var i=0; i<binaryArray.length; i++){
+                var digit=parseFloat(binaryArray[i]);
+                decimalanswer+=digit*(2**i)
+            }
+            return decimalanswer
+        }
+
+        function decToBin(decimalNumber){
+            var binaryString="";
+            while (decimalNumber>0){
+                var remainder=decimalNumber%2;
+                binaryString+=remainder
+                decimalNumber=Math.floor(decimalNumber/2);
+            }
+            binaryArray=String(binaryString).split("");
+            binaryArray.reverse()
+            binaryString=binaryArray.join("")
+            return binaryString
+        }
+
+        function octToDec(binaryNumber){
+            var decimalanswer=0;
+            binaryArray=String(binaryNumber).split("");
+            binaryArray.reverse();
+            for (var i=0; i<binaryArray.length; i++){
+                var digit=parseFloat(binaryArray[i]);
+                decimalanswer+=digit*(8**i)
+            }
+            return decimalanswer
+        }
+
+        function decToOct(decimalNumber){
+            var binaryString="";
+            while (decimalNumber>0){
+                var remainder=decimalNumber%8;
+                binaryString+=remainder
+                decimalNumber=Math.floor(decimalNumber/8);
+            }
+            binaryArray=String(binaryString).split("");
+            binaryArray.reverse()
+            binaryString=binaryArray.join("")
+            return binaryString
+        }
+
+        function hexToDec(binaryNumber){
+            var decimalanswer=0;
+            binaryArray=String(binaryNumber).split("");
+            binaryArray.reverse();
+            for (var i=0; i<binaryArray.length; i++){
+                var digit=binaryArray[i];
+                if (digit=="A"||digit=="a"){
+                    digit=10
+                }
+                else if (digit=="B"||digit=="b"){
+                    digit=11
+                }
+                else if (digit=="C"||digit=="c"){
+                    digit=12
+                }
+                else if (digit=="D"|digit=="d"){
+                    digit=13
+                }
+                else if (digit=="E"||digit=="e"){
+                    digit=14
+                }
+                else if (digit=="F"||digit=="f"){
+                    digit=15
+                }
+                digit=parseFloat(digit)
+                decimalanswer+=digit*(16**i)
+            }
+            return decimalanswer
+        }
+
+        function decToHex(decimalNumber){
+            var binaryString="";
+            while (decimalNumber>0){
+                var remainder=decimalNumber%16;
+                if (remainder=="10"){
+                    remainder="A"
+                }
+                else if (remainder=="11"){
+                    remainder="B"
+                }
+                else if (remainder=="12"){
+                    remainder="C"
+                }
+                else if (remainder=="13"){
+                    remainder="D"
+                }
+                else if (remainder=="14"){
+                    remainder="E"
+                }
+                else if (remainder=="15"){
+                    remainder="F"
+                }
+                binaryString+=remainder
+                decimalNumber=Math.floor(decimalNumber/16);
+            }
+            binaryArray=String(binaryString).split("");
+            binaryArray.reverse()
+            binaryString=binaryArray.join("")
+            return binaryString
+        }
+        </script>
+</head>
+
+<body>
+    <h1>Base Convertor</h1>
+    <!--https://www.shutterstock.com/video/clip-1013858489-random-binary-green-numbers-0-1-scrolling-down-->
+    <img src="Images/1.jpg" width="426" height="240">
+    
+    <br>
+    <input type="number" name="Number to Convert" id="numberConvertor" class="textbox" oninput="correctInput()">
+    <select id="baseConvertor" onchange="typeNumberOrText()">
+        <option value="base2to10">Base 2 To 10</option>
+        <option value="base8to10">Base 8 To 10</option>
+        <option value="base16to10">Base 16 To 10</option>
+        <option value="base10to2">Base 10 To 2</option>
+        <option value="base10to8">Base 10 To 8</option>
+        <option value="base10to16">Base 10 To 16</option>
+    </select>
+    <input type="text" name="Converted Number" id="convertedNumber" readonly class="textbox">
+    <br>
+    <div id="mainMessage"></div>
+</body>
+</body>
+
+</html>

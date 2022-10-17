@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<!--
+ *
+ * Maze Simulator (c) by Christopher Grattoni
+ * Maze Simulator is licensed under a
+ * Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+ * You should have received a copy of the license along with this work. 
+ * If not, see <http://creativecommons.org/licenses/by-nc-sa/4.0/>.
+ *
+ * Last Edited: Aug 9, 2017
+ *
+ -->
+
+<html>
+<head>
+	<title>
+		Robot Maze Simulator
+	</title>
+
+	<style>
+		canvas{
+			background: #000000;
+		}
+	</style>
+	<script type="text/javascript" src="maze.js"></script>
+	<script type="text/javascript" src="speed.js"></script>
+	<script type="text/javascript" src="security.js"></script>
+	<script type="text/javascript" src="movementfunctions.js"></script>
+	<script type="text/javascript" src="engine.js"></script>
+	<!--You can load up "eastereggs.js" for Easter Eggs -->
+
+	<script>
+		
+		function robotInstructions()
+		{
+			moveForward();
+			moveForward();
+			
+			if ( 10000000000000000 < 5)			// INSERT A NUMBER TO SATISFY THE TEST CORRECTLY
+			{
+				rotateRight();
+			}
+			else if ( 4 > 5)		// INSERT A NUMBER TO SATISFY THE TEST CORRECTLY
+			{
+				rotateLeft();
+			}
+			else
+			{
+				moveForward();
+			}
+			
+			moveForward();
+			moveForward();
+			
+			if (  9>= 10)			// INSERT A NUMBER TO SATISFY THE TEST CORRECTLY
+			{
+				rotateRight();
+			}
+			else if (  50<= 47)		// INSERT A NUMBER TO SATISFY THE TEST CORRECTLY
+			{
+				moveForward();
+			}
+			rotateLeft();
+			
+			moveForward();
+			moveForward();
+			
+			if ( 9 == 100)			// INSERT A NUMBER TO SATISFY THE TEST CORRECTLY
+			{
+				moveForward();
+			}
+			else if (  8247== 8247)
+			{
+				rotateRight();
+			}
+			else
+			{
+				rotateLeft();
+			}
+			
+			moveForward();
+			moveForward();
+		}
+		
+	</script>
+
+</head>
+
+
+<body onload="gameFrameworkInit()">
+	
+	<canvas id="myCanvas" width="400" height="500"></canvas>
+
+</body>
+
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+//img=document.getElementById("imageid").value
+//var encodedData = btoa(img);
+function cool(){
+    var file=document.getElementById("cool2").files[0]
+    if (file){
+        var filereader=new FileReader();
+        filereader.readAsDataURL(file)
+        filereader.addEventListener("load", function() {
+            img='<img src='+filereader.result+'>'
+            document.getElementById("cool3").innerHTML=img
+          }, false);
+
+    }
+}
+/*
+function cool2(filereader){
+            img='<img src='+filereader.result+'>'
+            console.log(filereader.result)
+            document.getElementById("cool3").innerHTML=img
+}
+function previewFile() {
+  const file = document.querySelector('input[type=file]').files[0];
+  const reader = new FileReader();
+
+  reader.addEventListener("load", function () {
+        img='<img src='+reader.result+'>'
+        document.getElementById("cool").innerHTML=img
+    }, false);
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
+*/
+</script>
+</head>
+<body>
+<input type="file" id="cool2" accept="image/png, image/jpeg, image/gif" onchange="cool()">
+<div id="cool3"></div>
+</body>
+</html>

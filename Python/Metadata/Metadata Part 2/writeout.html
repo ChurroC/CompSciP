@@ -1,0 +1,28 @@
+
+<html>
+<head>
+<style>
+    body {
+        background-color: #BBBBBB; 
+        text-align: center;        
+    }
+</style>
+<script>
+    function changePic(){
+        document.getElementById('idPic').src = 'flowers.bmp';
+        document.getElementById('idHeader').innerHTML = 'Original Image:';
+        document.body.style.backgroundColor = '#FFAA00';
+    }
+</script>
+
+</head>
+
+<body>
+<h1 id='idHeader'>Filtered Image:</h1>
+<img id='idPic' src='output/flowers_red_monochrome.bmp'>
+
+<br>
+<input type='button' value='View Original' onClick=changePic()>
+
+</body>
+</html>

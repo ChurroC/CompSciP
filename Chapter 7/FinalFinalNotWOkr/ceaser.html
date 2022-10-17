@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="../../Main/main.js"></script>
+<link rel="stylesheet" href="../../Main/sidebar.css">
+
+<style>
+body{
+    text-align: center;
+    margin: 0;
+}
+textarea{
+    text-align: center;
+}
+h1{
+    margin: 0;
+    padding-top: 21.44px;
+    padding-bottom: 21.44px;
+}
+</style>
+
+<script>
+"use strict";
+
+//I could also make the key as a paramter in encryptOrDecrypt function
+function encryptOrDecrypt(key=document.querySelector("#key").value, message=document.querySelector("#messageHolder").value){
+    message=message.split("")
+
+    let encryptedMessage=""
+    for (let i=0; i<message.length; i++){
+        if ((/[a-zA-Z]/).test(message[i])){
+            message[i]=message[i].toLowerCase()
+            message[i]=message[i].charCodeAt()
+            if (document.querySelector("#option").value=="encrypt"){
+                message[i]=parseInt(message[i])+parseInt(key)
+                if (message[i]>122){
+                    message[i]=message[i]-26
+                }
+                message[i]=String.fromCharCode(message[i])
+                message[i]=message[i].toUpperCase()
+            }
+            else{
+                message[i]=parseInt(message[i])-parseInt(key)
+                if (message[i]<97){
+                    message[i]=message[i]+26
+                }
+                message[i]=String.fromCharCode(message[i])
+            }
+        }
+        encryptedMessage+=message[i]
+    }
+
+    return encryptedMessage
+}
+
+function vigenère(key,message=document.querySelector("#messageHolder").value){
+    console.log('wwd')
+    let encryptedMessage=""
+    
+    //checks for whitespace
+    if (/\S/.test(key)){
+        message=message.split("")
+        key=key.split("")
+
+        for (let i=0; i<message.length; i++){
+            let encryptionKey=key[i%key.length]
+            if ((/[a-zA-Z]/).test(encryptionKey)){
+                encryptionKey=encryptionKey.toLowerCase()
+                encryptionKey=encryptionKey.charCodeAt()
+                encryptionKey-=97
+            }
+            encryptedMessage+=encryptOrDecrypt(encryptionKey,message[i])
+        }
+    }
+    return encryptedMessage
+}
+
+function onChange(){
+    document.querySelector("#output").value=vigenère(document.querySelector("#key").value)
+}
+
+function pickRandomKey(key){
+    const randomInteger=randomInt(1,25)
+    document.querySelector("#key").value=randomInteger
+    onChange()
+}
+
+function instructions(){
+    if (document.getElementById("instructions").style.display=="none"){
+        document.getElementById("instructions").style.display="block"
+    }
+    else{
+        document.getElementById("instructions").style.display="none"
+    }
+}
+
+function bruteForceAttack(){
+    let finalMessage=""
+    let decryptOrEncrypt=""
+    if (document.querySelector("#option").value=="encrypt"){
+        decryptOrEncrypt="Encrypt"
+    }
+    else{
+        decryptOrEncrypt="Decrypt"
+    }
+    
+    finalMessage+=`${decryptOrEncrypt}ing ${document.querySelector("#messageHolder").value} with Brute Force\n`
+    for (let i=1; i<26; i++){
+        finalMessage+=`Key ${i}: ${encryptOrDecrypt(i)}\n`
+    }
+    document.querySelector("#output").value=finalMessage
+}
+
+function vigenèreSite(){
+    document.querySelector("h1").innerHTML="Vigenère Cipher Project"
+
+    document.querySelector("#keyDiv").innerHTML=""
+    const textbox=document.createElement("input")
+    textbox.type="text"
+    textbox.id="key"
+    textbox.oninput=onChange
+    document.querySelector("#keyDiv").appendChild(textbox)
+    
+    onChange()
+}
+
+function caesarSite(){
+    document.querySelector("h1").innerHTML="Caesar Cipher Project"
+
+    document.querySelector("#keyDiv").innerHTML=""
+    const select=document.createElement("select")
+    select.id="key"
+    select.onchange=onChange
+    document.querySelector("#keyDiv").appendChild(select)
+
+    for (let i=1; i<=25; i++){
+        const option=document.createElement("OPTION");
+        option.innerHTML=i
+        option.value=i
+        document.querySelector("#key").appendChild(option);
+    }
+    
+    onChange()
+}
+</script>
+
+</head>
+
+<!--onload='repsonsiveTextboxInPX("#output", convertVPToPX(100, true));repsonsiveTextboxInPX("#messageHolder", convertVPToPX(7, true))'-->
+<body onload="caesarSite()">
+<div id="sidebar" class="sidebar" style="left: 0; z-index: 1; height: 100vh;">
+    <a href="#" class="closeButton" style="left: .75vw;" onclick="changeWidth('#sidebar', '0%')">×</a>
+    <div class="content">
+        <a href="#" onclick="caesarSite()">Caesar Cipher</a><br>
+        <a href="#" onclick="vigenèreSite()">Vigenère Cipher</a><br>
+    </div>
+</div>
+<span onclick="changeWidth('#sidebar', '12.5%')" style="left: 0;position: absolute;"><span class="sidebarButton">☰</span> Menu</span><br>
+
+<h1>Caesar Cipher Project</h1>
+
+<!--&#013; Use this for linebreaks? Or just do actual linebreaks in html.-->
+<textarea name="textArea" placeholder="Type message to decrypt or encrypt." id="messageHolder" style="height: 10vh; width: 75vw;" cols="30" rows="10" oninput="onChange()"></textarea><br><br>
+
+<select name="option" id="option" onchange="onChange()">
+    <option value="encrypt">Encrypt</option>
+    <option value="decrypt">Decrypt</option>
+</select><br><br>
+
+Key: <div id="keyDiv" style="display: inline;"></div><br><br>
+
+<input type="button" value="Pick Random Key" id="randomKey" onclick="pickRandomKey()">
+<input type="button" value="Button Instructions" id="buttonInstructions" onclick="instructions()">
+<input type="button" value="Brute Force Attack" id="bruteForceAttack" onclick="bruteForceAttack()"><br><br>
+
+<textarea id="output" style="height: 10vh; width: 75vw;" readonly></textarea>
+
+<div id="instructions" style="display: none;">Instructions</div>
+
+</body>
+
+</html>

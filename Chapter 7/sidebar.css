@@ -1,0 +1,28 @@
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    width: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    box-shadow: .260416vw 0px .52083vw grey;
+}
+.content a, .content div{
+    padding: 0.417vw;
+    font-size: 0.885vw;
+    color: grey;
+    text-decoration: none;
+    display: inline-block;
+}
+.closeButton{
+    color: grey;
+    text-decoration: none;
+    cursor: pointer;
+    position: absolute;
+    width: 1.887vw;
+    font-size: 1.5vw;
+}
+.sidebarButton{
+    font-size: 1.302vw;
+    cursor: pointer;
+}

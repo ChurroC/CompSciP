@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script>
+            window.onload=console.log(randomInt(-5,-10))
+            
+            function randomInt(min, max){
+            var Operation="+";
+
+            min=Math.ceil(min);
+            max=Math.floor(max);
+
+            if (min<0 || max<0){
+                Operation="-";
+            }
+
+            FinalMath=Math.floor(Math.random()*(max-min))+min
+
+            return FinalMath;
+            }
+        </script>
+    </head>
+</html>

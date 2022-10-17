@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+    @font-face {
+        font-family: computer;
+        src: url(Font/1.otf);
+    }
+    body{
+        font-family: computer;
+        text-align: center;
+    }
+    .textbox{
+        text-align: center;
+        display: inline-block;
+    }
+    .div{
+            display: inline-block;
+            text-align: right;
+            width: 250px;
+            vertical-align: top;
+    }
+</style>
+
+<script>
+</script>
+
+</head>
+
+<body>
+    <h1>RGB Convertor</h1>
+    <div id="redValue" class="div">Red Value (0-255):</div>
+    <input type="number" id="convertRedValue" class="textbox">
+    <br><br>
+    <div id="greenValue" class="div">Green Value (0-255):</div>
+    <input type="number" id="convertGreenValue" class="textbox">
+    <br><br>
+    <div id="blueValue" class="div">Blue Value (0-255):</div>
+    <input type="number" id="convertBlueValue" class="textbox">
+    <br><br>
+    
+    <select id="baseConvertor" onchange="typeNumberOrText()">
+        <option value="intToRGB">Integers To RGB</option>
+        <option value="hexToRGB">Hex To RGB</option>
+    </select>
+    <br><br>
+    <div id="mainMessage"></div>
+</body>
+
+</html>

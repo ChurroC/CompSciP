@@ -1,0 +1,183 @@
+<html>
+<head>
+    <title>
+        Adult Interview
+    </title>
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            color: white;
+            border: 5px solid white;
+            padding: 15px;
+            background-image: url("Images/cool.jpg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .div-align{
+            text-align: right;
+            padding-right: 617px;
+        }
+        .final{
+            border: 5px solid white;
+            padding: 15px;
+            visibility:visible;
+        }
+        .invisible{
+            visibility:hidden;
+        }
+    </style>
+
+    <script>
+        //https://www.aspsnippets.com/Articles/Dynamically-populate-Year-in-DropDownList-SELECT-using-JavaScript.aspx
+        var Checked=0;
+        var item;
+        var influence;
+        const CURRENT_YEAR =(new Date()).getFullYear();
+
+        window.onload=function Dropdown(){
+            for (var i=CURRENT_YEAR ; i>=1983; i--){
+                console.log("wd")
+                var option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                document.getElementById("InternetAccessed").appendChild(option);
+            }
+        }
+    
+        //Check how many checkboxes were checked.
+        function CheckBox(){
+            var isChecked;
+            Checked=0;
+            for (var i=1; i<10; i++){
+                Id="checkId"+i;
+                isChecked=document.getElementById(Id).checked;
+                if (isChecked){
+                    Checked+=1;
+                }
+            }
+
+            if (Checked==1){
+                item="item";
+            }
+            else{
+                item="items";
+            }
+            
+            if (Checked>=0 && Checked<=2){
+                influence="LOW";
+            }
+            else if (Checked>=3 && Checked<=5){
+                influence="FAIR";
+            }
+            else{
+                influence="HIGH";
+            }
+
+        }
+
+        function OtherCheckBox(){
+            console.log("wdff")
+            var isChecked
+            isChecked=document.getElementById("checkId9").checked
+            if (isChecked){
+                document.getElementById('TextBox').style.visibility="visible"
+            }
+            else{
+                document.getElementById('TextBox').style.visibility="hidden"
+            }
+        }
+
+        //What happens when you press submit
+        function Submit(){
+            FirstName=document.getElementById('FirstName').value;
+            LastName=document.getElementById('LastName').value;
+
+            TextResponse=document.getElementById('TextArea').value;
+            TextLength=TextResponse.length;
+
+            CheckBox();
+
+            YearsOnInternet=CURRENT_YEAR-document.getElementById("InternetAccessed").value
+
+            var FinalSubmit="";
+            FinalSubmit+="Hello "+FirstName+" "+LastName+", you have been on the internet for "+YearsOnInternet+" years!"+"<br>";
+            FinalSubmit+="Your written response has "+TextLength+" characters in it!"+"<br>";
+            FinalSubmit+="You have checked off "+Checked+" "+item+", indicated the internet has had a "+influence+" impact on your life!";
+            //DO THE YEAR THING
+            document.getElementById("FinalSubmit").className="final";
+            document.getElementById('FinalSubmit').innerHTML=FinalSubmit;
+        }
+    </script>
+</head>
+
+<body>
+    <h1>
+        Adult Internet Review
+    </h1>
+    <h3>
+        Fill out this form to help me gather information to see how the internet has impacted poeples lives.
+    </h3>
+    <!--https://www.internetsociety.org/blog/2019/04/internet-of-things-devices-as-a-ddos-vector/-->
+    <img src="Images/Internet-of-Things-IoT-e1521969062826.jpg" alt="Internet Stuff" width="375" height="250.5">
+
+    
+    <h2>
+        Basic Information:
+    </h2>
+    First Name: <input id="FirstName" onchange="Function" placeholder="First Name">
+    <br>
+    <br>
+    Last Name: <input id="LastName" onchange="Function" placeholder="Last Name">  
+    <br>
+    <br>
+    <!--Change textbox to dropdown.-->
+    First Year You Accessed the Internet: <select id='InternetAccessed'></select>  
+    
+
+    <h2>
+        Questions:
+    </h2>
+    Briefly describe what you remember from your first experience with the internet:
+    <br>
+    <!--Name is pretty much Id-->
+    <textarea id="TextArea" rows="5" cols="77.5"></textarea>
+    <br>
+    <br>
+    Which of the following activities has improved or become more simple to do since the invention of the internet?
+    <br>
+    <div class="div-align">
+    Keeping in touch with family and/or friends<input type="Checkbox" id="checkId1">
+    <br>
+    Organizing parties, dinners, or events<input type="Checkbox" id="checkId2">
+    <br>
+    Researching information on a particular topic<input type="Checkbox" id="checkId3">
+    <br>
+    Following current events<input type="Checkbox" id="checkId4">
+    <br>
+    Make a phone call (from work, home, hotel, or public place)<input type="Checkbox" id="checkId5">
+    <br>
+    Watching a movie<input type="Checkbox" id="checkId6">
+    <br>
+    Keeping track of finances<input type="Checkbox" id="checkId7">
+    <br>
+    Shopping for goods and services<input type="Checkbox" id="checkId8">
+    <br>
+    Other<input type="Checkbox" id="checkId9" onchange="OtherCheckBox()">
+    <br>
+    <input type="text" id="TextBox" class="invisible">
+    </div>
+    <br>
+    <input type="button" value="Submit" onclick="Submit()">
+    <br>
+    <br>
+    <div id='FinalSubmit'></div>
+</body>
+
+
+
+
+
+</html>

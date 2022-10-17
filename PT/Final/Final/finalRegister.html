@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<style>
+    .table{
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<script src="script.js"></script>
+</head>
+
+<body>
+    <h1>Please Sign In</h1>
+	<table id="table" class="table">
+		<tr>
+			<th style="font-weight: normal;">First Name:</th>
+			<th style="font-weight: normal;">Last Name:</th>
+		</tr>
+		<tr>
+			<th><input type="text" placeholder="First Name" id="firstName"></th>
+			<th><input type="text" placeholder="Last Name" id="lastName"></th>
+		</tr>
+	</table>
+    Email:<br>
+    <input type="text" placeholder="Email" id="email"><br>
+    Username:<br>
+    <input type="text" placeholder="Username" id="username"><br>
+    Password:<br>
+    <input type="password" placeholder="Password" id="password"><br><br>
+
+    <input type="button" value="Sign In" id="signIn" onclick="send('finalSignIn.html')"></input>
+    <input type="button" value="Sign Up" id="createAccount" onclick='signUp("firstName", "lastName", "username", "password", "mainMessage", "email")'>
+    <div id="mainMessage"></div>
+</body>
+
+</html>

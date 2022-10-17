@@ -1,0 +1,47 @@
+body{
+    text-align: center;
+}
+
+.invisible{
+    display: none;
+}
+.visible{
+    display: block;
+}
+
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    width: 0;
+    background-color: white;
+    overflow-x: hidden;
+    transition: 0.5s;
+    box-shadow: 5px 0px 10px grey;
+}
+.sidebar a, .sidebar span{
+    padding: 8px;
+    font-size: 17px;
+    color: grey;
+    text-decoration: none;
+    display: grid;
+}
+.sidebar a:hover, .sidebar span:hover{
+    color: black;
+}
+.content{
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    width: 70%;
+    margin: 0 0 0 -35%;
+}
+.closeButton{
+    left: 10px;
+    text-decoration: none;
+    position: absolute;
+    cursor: pointer;
+}
+.sidebarButton{
+    font-size: 30;
+    cursor: pointer;
+}

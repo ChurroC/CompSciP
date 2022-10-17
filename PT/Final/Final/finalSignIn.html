@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+</head>
+
+<body>
+    <h1>Please Sign In</h1>
+    <input type="text" style="text-align: center;" id="username" placeholder="Enter Username"><br>
+    <input type="password" style="text-align: center;" id="password" placeholder="Enter Password"><br>
+    <input type="button" value="Sign In" onclick='signIn("username", "password", "mainMessage")'>
+    <input type="button" value="Create Account" onclick='send("finalRegister.html")'>
+    <input type="button" value="Delete Account" onclick='send("finalDelete.html")'>
+    <input type="button" value="Admin Sign In" id="signIn" onclick="send('adminLogin.html')"></input>
+    <div id="mainMessage"></div>
+</body>
+
+</html>
