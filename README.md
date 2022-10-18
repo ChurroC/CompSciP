@@ -1,1 +1,1 @@
-This is my code from computer science principles. I should have committed it to GitHub end of last year but had to wait for AP test results to show my AP performance assessment.
+This is my code from computer science principles. I should have committed it to GitHub end of last year but had to wait for AP test results to show my AP performance task. The github pages will show the PT. Even though I spent most of the year on html, css, and js. Github shows that I've wrote alot more jupyter notebooks because there are alot of extra space and and writing in there.
