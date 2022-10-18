@@ -182,7 +182,7 @@
 			// if the game state is play:
 			if (gameState=="play"){
 				// if the keypress is "a":
-				if (curKey==a){
+				if (curKey=='a'){
 					// if the cards match:
 					if (currentPlayer1Card==currentPlayer2Card){
 						// inform the user that Player 1 has claimed the match
@@ -208,7 +208,7 @@
 					checkForWins();
 					}
 				}
-				else if (curKey==l){
+				else if (curKey=='l'){
 				// otherwise, if the keypress is "l":
 					// adapt the logic above to "l" as appropriate
 					// if the cards match:
@@ -237,7 +237,7 @@
 					}
 				}
 				// otherwise, if the keypress is "n":
-				else if (curKey==n){
+				else if (curKey=='n'){
 					// if the cards match:
 					if (currentPlayer1Card==currentPlayer2Card){
 						// inform the user that there is a match on the board
@@ -259,7 +259,7 @@
 			// otherwise, if the game state is "pause":
 			else if (gameState=="pause"){
 				// if the keypress is "n":
-				if (curKey==n){
+				if (curKey=='n'){
 					// call the function that deals new cards
 					// set the game message to an empty string
 				}
@@ -389,7 +389,7 @@
 	</script>
 </head>
 	<!--Add an onKeyUp event handler to <body> that calls "checkMatch(event)"-->
-<body>
+<body onkeyup="checkMatch(event)">
 	<h1>Monster Match</h1>
 	<input type="button" value="Start New Game" onclick="startNewGame()" class="button button2">
 	<input type="button" id="instructions" value="Show Instructions" onclick="showInstructions()" class="button button2">
